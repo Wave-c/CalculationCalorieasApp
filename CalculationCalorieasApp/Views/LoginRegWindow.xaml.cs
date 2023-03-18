@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CalculationCalorieasApp.ViewModels;
+using CalculationCalorieasApp.Views.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +19,12 @@ namespace CalculationCalorieasApp.Views
     /// <summary>
     /// Логика взаимодействия для LoginReg.xaml
     /// </summary>
-    public partial class LoginReg : Window
+    public partial class LoginRegWindow : Window, ILoginOrRegisterWindow
     {
-        public LoginReg()
+        public LoginRegWindow()
         {
             InitializeComponent();
+            DataContext = new LoginRegWindowViewModel(this);
         }
     }
 }

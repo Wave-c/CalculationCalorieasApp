@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CalculationCalorieasApp.ViewModels;
+using CalculationCalorieasApp.Views.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +19,18 @@ namespace CalculationCalorieasApp.Views
     /// <summary>
     /// Логика взаимодействия для Login.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class LoginWindow : Window, ILoginOrRegisterWindow
     {
-        public Login()
+        public LoginWindow()
         {
             InitializeComponent();
+            DataContext = new LoginWindowViewModel(this);
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = (PasswordBox)sender;
+            ((LoginRegWindowViewModel)DataContext).Password = passwordBox.Password;
         }
     }
 }

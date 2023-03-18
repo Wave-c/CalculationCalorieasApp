@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using CalculationCalorieasApp.Medels.Entitys;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace CalculationCalorieasApp.ViewModels
     {
         private BitmapImage _image;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(User currentUser)
         {
 
         }

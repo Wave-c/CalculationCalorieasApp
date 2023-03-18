@@ -1,4 +1,7 @@
-﻿using CalculationCalorieasApp.Medels;
+﻿using CalculationCalorieasApp.Helpers;
+using CalculationCalorieasApp.Medels;
+using CalculationCalorieasApp.Medels.Entitys;
+using CalculationCalorieasApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +24,17 @@ namespace CalculationCalorieasApp.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private User _currentUser;
+        public MainWindow(User currentUser)
         {
             InitializeComponent();
-            using(AppDBContext dbContext = new AppDBContext())
-            {
+            _currentUser = currentUser;
+            DataContext = new MainWindowViewModel(currentUser);
+        }
 
-            }
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).Image = await BitmapHelper.GetUserImageAsync(_currentUser);
         }
     }
 }
