@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalculationCalorieasApp.Medels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,10 @@ namespace CalculationCalorieasApp.Views
         public MainWindow()
         {
             InitializeComponent();
+            using(AppDBContext dbContext = new AppDBContext())
+            {
+
+            }
         }
     }
 }
