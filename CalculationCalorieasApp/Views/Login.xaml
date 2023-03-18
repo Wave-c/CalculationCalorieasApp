@@ -1,0 +1,29 @@
+﻿<Window x:Class="CalculationCalorieasApp.Views.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
+        mc:Ignorable="d"
+        Title="Login" Height="400" Width="400">
+    <Grid>
+        <Border Background="LightBlue"  CornerRadius="60" Margin=" 20">
+            <StackPanel Margin="20">
+                <Label Content="АВТОРИЗАЦИЯ" Foreground="Black"  FontSize="25" HorizontalAlignment="Center"/>
+                <Separator></Separator>
+                <Label Content="ЛОГИН" Foreground="Black"/>
+                <TextBox  Background="#545d6a" Foreground="White" FontSize="18"/>
+                <Label Content="ПАРОЛЬ" Foreground="Black"/>
+                <PasswordBox  Background="#545d6a" Foreground="White" FontSize="18"/>
+                <DockPanel>
+                    <Button  Content="ВОЙТИ" Margin="20 10" HorizontalAlignment="Left" Background="Firebrick"
+                    Foreground="White" FontSize="17"
+                   />
+                    <Button  Content="РЕГИСТРАЦИЯ" Margin="20 10" HorizontalAlignment="Right" Background="Firebrick"
+                    Foreground="White" FontSize="17"
+                        />
+                </DockPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
