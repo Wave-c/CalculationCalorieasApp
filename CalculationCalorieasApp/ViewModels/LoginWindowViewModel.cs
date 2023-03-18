@@ -1,6 +1,7 @@
 ﻿using CalculationCalorieasApp.ViewModels.Base;
 using CalculationCalorieasApp.Views;
 using CalculationCalorieasApp.Views.Interfaces;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,18 @@ namespace CalculationCalorieasApp.ViewModels
         {
         }
 
-        private void OpenLoginRegWindow()
+        private DelegateCommand _openLoginRegWindowCommand;
+        public DelegateCommand OpenLoginRegWindowCommand => _openLoginRegWindowCommand ??= new DelegateCommand(OpenLoginRegWindowCommand_Execute);
+
+        protected override bool EnterToAppCommand_CanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(Password) && !string.IsNullOrWhiteSpace(UserName);
+        }
+        private void OpenLoginRegWindowCommand_Execute()
         {
             var loginWindow = new LoginRegWindow();
             loginWindow.Show();
-            ((LoginRegWindow)_window).Close();
+            ((LoginWindow)_window).Close();
         }
     }
 }

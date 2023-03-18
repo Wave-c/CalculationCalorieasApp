@@ -30,7 +30,7 @@ namespace CalculationCalorieasApp.Views
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             var passwordBox = (PasswordBox)sender;
-            ((LoginRegWindowViewModel)DataContext).Password = passwordBox.Password;
+            ((LoginWindowViewModel)DataContext).Password = passwordBox.Password;
         }
     }
 }

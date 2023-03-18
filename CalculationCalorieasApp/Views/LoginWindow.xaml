@@ -23,10 +23,8 @@
                    />
                     <Button  Content="РЕГИСТРАЦИЯ" Margin="20 10" HorizontalAlignment="Right" Background="Firebrick"
                     Foreground="White" FontSize="17"
-                        />
+                    Command="{Binding OpenLoginRegWindowCommand}"/>
                 </DockPanel>
-                <Label Content="Ещё не зарегистрированы?"/>
-                <Button Command="{Binding}" Content="Регистрация" Height="20" Width="80" HorizontalAlignment="Left"/>
             </StackPanel>
         </Border>
     </Grid>

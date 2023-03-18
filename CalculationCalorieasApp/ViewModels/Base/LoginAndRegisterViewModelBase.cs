@@ -2,6 +2,7 @@
 using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.Views;
 using CalculationCalorieasApp.Views.Interfaces;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CalculationCalorieasApp.ViewModels.Base
 {
-    public class LoginAndRegisterViewModelBase : BindableBase
+    public abstract class LoginAndRegisterViewModelBase : BindableBase
     {
         private string _userName;
         private string _password;
@@ -29,6 +30,7 @@ namespace CalculationCalorieasApp.ViewModels.Base
             {
                 _userName = value;
                 RaisePropertyChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
         public string Password
@@ -38,12 +40,15 @@ namespace CalculationCalorieasApp.ViewModels.Base
             {
                 _password = value;
                 RaisePropertyChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
 
-        
+        protected DelegateCommand _enterToAppCommand;
+        public DelegateCommand EnterToAppCommand => _enterToAppCommand ??= new DelegateCommand(EnterToAppCommand_Execute, EnterToAppCommand_CanExecute);
 
-        protected void EnterToApp()
+        protected abstract bool EnterToAppCommand_CanExecute();
+        protected void EnterToAppCommand_Execute()
         {
             using (var dbContext = new AppDBContext())
             {

@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
+        xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         mc:Ignorable="d"
-        Title="LoginReg" Height="400" Width="400">
+        Title="LoginReg" Height="430" Width="400"
+        d:DataContext="{d:DesignInstance Type=viewModels:LoginRegWindowViewModel}">
     <Grid>
         <Border Background="LightBlue"  CornerRadius="60" Margin=" 20">
             <StackPanel Margin="20">
@@ -14,15 +16,15 @@
                 <Label Content="ЛОГИН" Foreground="Black"/>
                 <TextBox  Background="#545d6a" Foreground="White" FontSize="20"/>
                 <Label Content="ПАРОЛЬ" Foreground="Black"/>
-                <PasswordBox  Background="#545d6a" Foreground="White" FontSize="20"/>
+                <PasswordBox x:Name="_passwordBox" PasswordChar="*" PasswordChanged="PasswordBox_PasswordChanged" Background="#545d6a" Foreground="White" FontSize="20"/>
                 <Label Content="ПОДТВЕРДИТЕ ПАРОЛЬ" Foreground="Black"/>
-                <TextBox  Background="#545d6a" Foreground="White" FontSize="20"/>
+                <PasswordBox x:Name="_passwordConfirmationBox" PasswordChar="*" PasswordChanged="PasswordBox_PasswordConfirmationChanged" Background="#545d6a" Foreground="White" FontSize="20"/>
                 <DockPanel>
                     <Button Content="ЗАРЕГИСТРИРОВАТЬ" Margin="0 20 0 0" HorizontalAlignment="Center" Background="Firebrick"
-                    Foreground="White" FontSize="20"/>
+                    Foreground="White" FontSize="20" Command="{Binding EnterToAppCommand}"/>
                 </DockPanel>
                 <Label Content="Уже зарегистрированы?"/>
-                <Button Command="{Binding }" Content="Войти" Height="20" Width="40" HorizontalAlignment="Left"/>
+                <Button Command="{Binding OpenLoginWindowCommand}" Content="Войти" Height="20" Width="40" HorizontalAlignment="Left"/>
             </StackPanel>
         </Border>
     </Grid>
