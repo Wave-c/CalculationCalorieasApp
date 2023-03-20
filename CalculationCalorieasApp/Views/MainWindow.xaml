@@ -10,6 +10,16 @@
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     <Grid>
-        <Image Source="{Binding Image}"/>
+        <Button Command="{Binding ChangeImageCommand}">
+            <Button.Template>
+                <ControlTemplate>
+                    <Ellipse Width="100" Height="100">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>

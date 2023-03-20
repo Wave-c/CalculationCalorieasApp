@@ -1,4 +1,6 @@
-﻿using CalculationCalorieasApp.Medels.Entitys;
+﻿using CalculationCalorieasApp.Helpers;
+using CalculationCalorieasApp.Medels.Entitys;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,11 @@ namespace CalculationCalorieasApp.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private BitmapImage _image;
+        private User _currentUser;
 
         public MainWindowViewModel(User currentUser)
         {
-
+            _currentUser = currentUser;
         }
 
         public BitmapImage Image
@@ -26,6 +29,14 @@ namespace CalculationCalorieasApp.ViewModels
                 _image = value;
                 RaisePropertyChanged();
             }
+        }
+
+        private DelegateCommand _changeImageCommand;
+        public DelegateCommand ChangeImageCommand => _changeImageCommand ??= new DelegateCommand(ChangeImageCommand_Execute);
+
+        private async void ChangeImageCommand_Execute()
+        {
+            Image = await BitmapHelper.SetUserImageAsync(_currentUser);
         }
     }
 }

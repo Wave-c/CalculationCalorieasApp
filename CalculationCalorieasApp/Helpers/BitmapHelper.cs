@@ -9,6 +9,7 @@ using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.Medels;
 using System.Linq;
 using System.Text;
+using Microsoft.Win32;
 
 namespace CalculationCalorieasApp.Helpers
 {
@@ -69,6 +70,34 @@ namespace CalculationCalorieasApp.Helpers
                     return BitmapToBitmapImage(new Bitmap("..//..//..//Resource/NoPhotoUser.png"));
                 }
                 throw new Exception();
+            }
+        }
+        public static async Task<BitmapImage> SetUserImageAsync(User currentUser)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
+
+            bool? result = dlg.ShowDialog();
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                BitmapImage image = BitmapHelper.BitmapToBitmapImage(new Bitmap(filename));
+
+                ImageConverter converter = new ImageConverter();
+                byte[] bTemp = (byte[])converter.ConvertTo(BitmapHelper.FromBitmapImagetoBitmap(image), typeof(byte[]));
+                
+                using(var dbContext = new AppDBContext())
+                {
+                    dbContext.Users.Where(x => x.Id == currentUser.Id).First().Image = bTemp;
+                    await dbContext.SaveChangesAsync();
+                }
+                return await GetUserImageAsync(currentUser);
+            }
+            else
+            {
+                return BitmapToBitmapImage(new Bitmap("..//..//..//Resource/NoPhotoUser.png"));
             }
         }
     }

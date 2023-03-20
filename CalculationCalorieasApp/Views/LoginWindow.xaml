@@ -18,7 +18,7 @@
                 <Label Content="ПАРОЛЬ" Foreground="Black"/>
                 <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" PasswordChar="*" Background="#545d6a" Foreground="White" FontSize="18"/>
                 <DockPanel>
-                    <Button  Content="ВОЙТИ" Margin="20 10" HorizontalAlignment="Left" Background="Firebrick"
+                    <Button Command="{Binding EnterToAppCommand}" Content="ВОЙТИ" Margin="20 10" HorizontalAlignment="Left" Background="Firebrick"
                     Foreground="White" FontSize="17"
                    />
                     <Button  Content="РЕГИСТРАЦИЯ" Margin="20 10" HorizontalAlignment="Right" Background="Firebrick"
