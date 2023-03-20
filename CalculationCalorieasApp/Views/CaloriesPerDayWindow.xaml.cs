@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CalculationCalorieasApp.Medels.Extensions;
+using CalculationCalorieasApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,10 @@ namespace CalculationCalorieasApp.Views
         public CaloriesPerDayWindow()
         {
             InitializeComponent();
+            _statusComboBox.ItemsSource =
+                (Enum.GetValues(typeof(Goal)) as Goal[])
+                .Select(s => s.GetDescription());
+            DataContext = new CaloriesPerDayWindowViewModel();
         }
     }
 }

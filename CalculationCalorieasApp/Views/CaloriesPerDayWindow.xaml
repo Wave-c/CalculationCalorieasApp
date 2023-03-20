@@ -8,10 +8,18 @@
         xmlns:entities="clr-namespace:CalculationCalorieasApp.Medels.Entitys"
         xmlns:system="clr-namespace:System;assembly=mscorlib" 
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
-        
+         d:DataContext="{d:DesignInstance Type=viewModels:CaloriesPerDayWindowViewModel}"
         mc:Ignorable="d"
         Title="CaloriesPerDayWindow" Height="450" Width="800">
-    
+    <Window.Resources>
+        <ObjectDataProvider x:Key="GoalsEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModels:Goal"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <helpers:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -28,7 +36,10 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock>Выберите цель</TextBlock>
-        <ComboBox Grid.Column="1"></ComboBox>
+        <ComboBox Grid.Column="1" x:Name="_statusComboBox"
+                      SelectedItem="{Binding SelectedGoal, 
+                Converter={StaticResource EnumDescriptionConverter},
+                UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1">Выберите пол</TextBlock>
         <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
         <TextBlock Grid.Row="2">Введите ваш текущий вес (в килограммах)</TextBlock>
