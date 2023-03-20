@@ -18,6 +18,12 @@
                 <x:Type TypeName="viewModels:Goal"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="GenderEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModels:Gender"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <helpers:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </Window.Resources>
     <Grid>
@@ -36,12 +42,17 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock>Выберите цель</TextBlock>
-        <ComboBox Grid.Column="1" x:Name="_statusComboBox"
+        <ComboBox Grid.Column="1" x:Name="_goalComboBox"
                       SelectedItem="{Binding SelectedGoal, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1">Выберите пол</TextBlock>
-        <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="1"
+                  x:Name="_genderComboBox"
+                      SelectedItem="{Binding SelectedGender, 
+                Converter={StaticResource EnumDescriptionConverter},
+                UpdateSourceTrigger=PropertyChanged}"
+                  ></ComboBox>
         <TextBlock Grid.Row="2">Введите ваш текущий вес (в килограммах)</TextBlock>
         <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="3">Введите ваш рост (в сантиметрах)</TextBlock>

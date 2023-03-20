@@ -24,9 +24,12 @@ namespace CalculationCalorieasApp.Views
         public CaloriesPerDayWindow()
         {
             InitializeComponent();
-            _statusComboBox.ItemsSource =
+            _goalComboBox.ItemsSource =
                 (Enum.GetValues(typeof(Goal)) as Goal[])
                 .Select(s => s.GetDescription());
+            _genderComboBox.ItemsSource =
+               (Enum.GetValues(typeof(Gender)) as Gender[])
+               .Select(s => s.GetDescription());
             DataContext = new CaloriesPerDayWindowViewModel();
         }
     }
