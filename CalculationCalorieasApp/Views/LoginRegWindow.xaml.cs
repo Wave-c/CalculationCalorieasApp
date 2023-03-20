@@ -31,10 +31,5 @@ namespace CalculationCalorieasApp.Views
         {
             ((LoginRegWindowViewModel)DataContext).Password = _passwordBox.Password;
         }
-
-        private void PasswordBox_PasswordConfirmationChanged(object sender, RoutedEventArgs e)
-        {
-            ((LoginRegWindowViewModel)DataContext).PasswordConfirmation = _passwordConfirmationBox.Password;
-        }
     }
 }

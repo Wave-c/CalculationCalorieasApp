@@ -19,8 +19,10 @@ namespace CalculationCalorieasApp.ViewModels
         public MainWindowViewModel(User currentUser)
         {
             _currentUser = currentUser;
+            HasUserAdminOptions = currentUser.Status == StatusUser.ADMIN ? true : false;
         }
 
+        public bool HasUserAdminOptions { get; set; }
         public BitmapImage Image
         {
             get => _image;

@@ -6,9 +6,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculationCalorieasApp"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
+        xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
         mc:Ignorable="d"
        Title="Рассчет килокаллорий" Height="684" Width="784">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
         <Style TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -62,7 +64,7 @@
             <Button Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
-         Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
+         Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BoolToVisConverter}}">
             <Button Content="Добавить" Grid.Column="0" Height="30" Width="80" Margin="72,10,498,60" Background="ForestGreen" />
             <Button Content="Изменить" Grid.Row="2" Grid.ColumnSpan="2" Height="30" Width="80" Margin="160,10,160,60" Background="ForestGreen" />
             <Button Content="Удалить" Height="30" Width="80" Margin="494,10,76,60" Background="ForestGreen"/>
