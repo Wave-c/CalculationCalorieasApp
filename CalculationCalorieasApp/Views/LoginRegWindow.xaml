@@ -6,22 +6,22 @@
         xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         mc:Ignorable="d"
-        Title="LoginReg" Height="430" Width="400"
-        d:DataContext="{d:DesignInstance Type=viewModels:LoginRegWindowViewModel}">
+       Title="РЕГИСТРАЦИЯ НОВОГО ПОЛЬЗОВАТЕЛЯ" Height="450" Width="350">
     <Grid>
         <Border Background="LightBlue"  CornerRadius="60" Margin=" 20">
             <StackPanel Margin="20">
-                <Label Content="РЕГИСТРАЦИЯ" Foreground="Black"  FontSize="25" HorizontalAlignment="Center" />
+                <Label Content="РЕГИСТРАЦИЯ" Foreground="Black"  FontSize="25" HorizontalAlignment="Center"/>
                 <Separator></Separator>
-                <Label Content="ЛОГИН" Foreground="Black"/>
-                <TextBox Text="{Binding UserName}" Background="#545d6a" Foreground="White" FontSize="20"/>
-                <Label Content="ПАРОЛЬ" Foreground="Black"/>
-                <PasswordBox x:Name="_passwordBox" PasswordChar="*" PasswordChanged="PasswordBox_PasswordChanged" Background="#545d6a" Foreground="White" FontSize="20"/>
-                <Label Content="ПОДТВЕРДИТЕ ПАРОЛЬ" Foreground="Black"/>
-                <PasswordBox x:Name="_passwordConfirmationBox" PasswordChar="*" PasswordChanged="PasswordBox_PasswordConfirmationChanged" Background="#545d6a" Foreground="White" FontSize="20"/>
+                <Label Content="Логин" Foreground="Black"/>
+                <TextBox Background="#545d6a" Foreground="Black"  FontSize="18"/>
+                <Label Content="Password" Foreground="Black"/>
+                <PasswordBox  Background="#545d6a" Foreground="Black"  FontSize="18"/>
+                <Label Content="Email" Foreground="Black"/>
+                <TextBox  Background="#545d6a" Foreground="Black"  FontSize="18"/>
                 <DockPanel>
-                    <Button Content="ЗАРЕГИСТРИРОВАТЬ" Margin="0 20 0 0" HorizontalAlignment="Center" Background="Firebrick"
-                    Foreground="White" FontSize="20" Command="{Binding EnterToAppCommand}"/>
+                    <Button Content="Зарегистрироваться" Margin="0 20 0 0" HorizontalAlignment="Center" Background="Firebrick"
+                    Foreground="White"  FontSize="17"
+                       />
                 </DockPanel>
                 <Label Content="Уже зарегистрированы?"/>
                 <Button Command="{Binding OpenLoginWindowCommand}" Content="Войти" Height="20" Width="40" HorizontalAlignment="Left"/>

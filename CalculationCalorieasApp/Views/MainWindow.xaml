@@ -7,19 +7,67 @@
         xmlns:local="clr-namespace:CalculationCalorieasApp"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
+       Title="Рассчет килокаллорий" Height="684" Width="784">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Button Command="{Binding ChangeImageCommand}">
-            <Button.Template>
-                <ControlTemplate>
-                    <Ellipse Width="100" Height="100">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.ColumnSpan="2" Grid.RowSpan="2" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
+        <Label Content="Выберите продукты (100 г)" Height="35" Width="260" Foreground="Black"  FontSize="20" RenderTransformOrigin="0.525,-1.342" Margin="32,31,33,201"/>
+        <ListBox Grid.Column="0" Grid.RowSpan="2" x:Name="Productslbx" Height="300" Width="300" Background="AliceBlue"   Foreground="Black" Margin="20,92,5,142"/>
+        <RadioButton x:Name="RadioButtonBreakfast" Content="Завтрак"  Foreground="Black"  FontSize="18" Margin="56,130,176,107" Grid.Row="1" Height="NaN" Width="NaN" RenderTransformOrigin="0.504,3.958"/>
+        <RadioButton x:Name="RadioButtonDinner"  Content="Обед" Foreground="Black"  FontSize="18" Margin="56,160,192,84" Height="NaN" Width="NaN" Grid.Row="1"/>
+        <RadioButton x:Name="RadioButtonSupper"  Content="Ужин"  Foreground="Black"  FontSize="18" Margin="56,188,187,58" Grid.Row="1" Height="NaN" Width="NaN"/>
+        <Button  Content="Добавить"   Background="LightGreen" Foreground="Black"  FontSize="15"
+                 RenderTransformOrigin="0.721,-3.205"  Width="90" Height="30" Margin="204,207,98,47" Grid.Row="1"  />
+        <Grid Grid.Column="1" Grid.RowSpan="1">
+
+            <Label Content="Ваша норма ккал"  Height="40" Width="120" Margin="10,24,195,203"></Label>
+            <TextBlock x:Name="SumCalloriesTxtBl" FontSize="15" Height="40" Width="120" Margin="135,64,70,163" Background="AliceBlue"></TextBlock>
+            <Label Content="Всего  за день"  Height="40" Width="120" Margin="10,64,195,163"></Label>
+            <TextBlock x:Name="NormCalloriesTxtBl" FontSize="15" Height="40" Width="120" Margin="135,24,70,203" Background="AliceBlue"></TextBlock>
+
+            <Label Content="Завтрак" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="109,109,0,0"/>
+            <ListBox x:Name="_breakfeastLbx" Height="50" Width="200"  Margin="55,151,70,66"></ListBox>
+            <Label Content="Обед" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="113,222,0,0" />
+            <ListBox x:Name="_dinnerLbx" Height="50" Width="200"  Margin="55,264,70,-47" ></ListBox>
+            <Label Content="Ужин" Height="35" Width="86" FontSize="20" Foreground="Black" Margin="113,346,126,-114"></Label>
+            <ListBox x:Name="_supperLbx" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
+
+            <Button Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
+            <Button Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
+        </Grid>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
+         Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Content="Добавить" Grid.Column="0" Height="30" Width="80" Margin="72,10,498,60" Background="ForestGreen" />
+            <Button Content="Изменить" Grid.Row="2" Grid.ColumnSpan="2" Height="30" Width="80" Margin="160,10,160,60" Background="ForestGreen" />
+            <Button Content="Удалить" Height="30" Width="80" Margin="494,10,76,60" Background="ForestGreen"/>
+            <Button Content="Сохранить" Grid.Row="2" Grid.ColumnSpan="2" Height="40" Width="100" Margin="150,50,150,10" Background="ForestGreen" />
+        </Grid>
+
     </Grid>
 </Window>
