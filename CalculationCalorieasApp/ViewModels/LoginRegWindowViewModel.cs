@@ -45,19 +45,13 @@ namespace CalculationCalorieasApp.ViewModels
                 Password = Encryptor.GenerateHash(Password),
                 Status = StatusUser.USER,
                 Image = new byte[0],
-                //Weight = 0,
-                //Height = 0,
-                //Age = 0,
-                //CalPerDay = 0,
-                //Gender = 0,
-                //Activ = 0,
-                //Goal = 0
+
             };
-            //using (var dbContext = new AppDBContext())
-            //{
-            //    await dbContext.Users.AddAsync(addedUser);
-            //    await dbContext.SaveChangesAsync();
-            //}
+            using (var dbContext = new AppDBContext())
+            {
+                await dbContext.Users.AddAsync(addedUser);
+                await dbContext.SaveChangesAsync();
+            }
             base.EnterToAppCommand_Execute();
         }
         protected override bool EnterToAppCommand_CanExecute()

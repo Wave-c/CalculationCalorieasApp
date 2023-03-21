@@ -14,6 +14,7 @@ using System.Windows;
 using Prism.Mvvm;
 using CalculationCalorieasApp.Helpers;
 using CalculationCalorieasApp.Medels;
+using CalculationCalorieasApp.Views;
 
 namespace CalculationCalorieasApp.ViewModels
 {
@@ -150,9 +151,12 @@ namespace CalculationCalorieasApp.ViewModels
 
             using (var dbContext = new AppDBContext())
             {
+                var currentUser = dbContext.Users.Where(x => x.Id == User.Id).FirstOrDefault();               
                 await dbContext.Users.AddAsync(User);
                 await dbContext.SaveChangesAsync();
             }
+            var mainWindow = new MainWindow(User);
+            mainWindow.Show();
         }
         public bool SaveCommand_CanExecute()
         {
