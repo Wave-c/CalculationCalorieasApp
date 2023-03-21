@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculationCalorieasApp"
+        xmlns:views="clr-namespace:CalculationCalorieasApp.Views"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
         mc:Ignorable="d"
@@ -65,10 +66,7 @@
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
          Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BoolToVisConverter}}">
-            <Button Command="{Binding AddProductCommand}" Content="Добавить" Grid.Column="0" Height="30" Width="80" Margin="72,10,498,60" Background="ForestGreen" />
-            <Button Content="Изменить" Grid.Row="2" Grid.ColumnSpan="2" Height="30" Width="80" Margin="160,10,160,60" Background="ForestGreen" />
-            <Button Command="{Binding DeleteProductCommand}" Content="Удалить" Height="30" Width="80" Margin="494,10,76,60" Background="ForestGreen"/>
-            <Button Content="Сохранить" Grid.Row="2" Grid.ColumnSpan="2" Height="40" Width="100" Margin="150,50,150,10" Background="ForestGreen" />
+            <views:AdminPanelUC/>
         </Grid>
 
     </Grid>
