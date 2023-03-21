@@ -75,9 +75,7 @@ namespace CalculationCalorieasApp.ViewModels
         public void CountCalories()
         {
             decimal calories = 0;
-            decimal proteins = 0;
-            decimal carbo = 0;
-            decimal fat = 0;
+            
             List<Products> breakfast_food = new List<Products>();
             List<Products> dinner_food = new List<Products>();
             List<Products> supper_food = new List<Products>();
