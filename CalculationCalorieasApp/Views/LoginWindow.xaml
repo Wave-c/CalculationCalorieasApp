@@ -8,6 +8,22 @@
         mc:Ignorable="d"
         Title="Login" Height="400" Width="400"
         d:DataContext="{d:DesignInstance Type=viewModels:LoginWindowViewModel}">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Border Background="LightBlue"  CornerRadius="60" Margin=" 20">
             <StackPanel Margin="20">
@@ -18,10 +34,10 @@
                 <Label Content="ПАРОЛЬ" Foreground="Black"/>
                 <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" PasswordChar="*" Background="#545d6a" Foreground="White" FontSize="18"/>
                 <DockPanel>
-                    <Button Command="{Binding EnterToAppCommand}" Content="ВОЙТИ" Margin="20 10" HorizontalAlignment="Left" Background="Firebrick"
+                    <Button Command="{Binding EnterToAppCommand}" Content="ВОЙТИ" Margin="20 10" Height="30" Width="65" HorizontalAlignment="Left" Background="Firebrick"
                     Foreground="White" FontSize="17"
                    />
-                    <Button  Content="РЕГИСТРАЦИЯ" Margin="20 10" HorizontalAlignment="Right" Background="Firebrick"
+                    <Button  Content="РЕГИСТРАЦИЯ" Margin="20 10" Height="30" Width="120" HorizontalAlignment="Right" Background="Firebrick"
                     Foreground="White" FontSize="17"
                     Command="{Binding OpenLoginRegWindowCommand}"/>
                 </DockPanel>
