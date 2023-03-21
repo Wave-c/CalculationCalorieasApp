@@ -60,9 +60,11 @@ namespace CalculationCalorieasApp.ViewModels.Base
                     MessageBox.Show("Неверное имя пользователя или пароль", "Ошибка", MessageBoxButton.OK);
                     return;
                 }
-                
-                var mainWindow = new MainWindow(currentUser);
-                mainWindow.Show();
+
+                //var mainWindow = new MainWindow(currentUser);
+                //mainWindow.Show();
+                var caloriesPerDayWindow = new CaloriesPerDayWindow(currentUser);
+                caloriesPerDayWindow.Show();
             }
             ((Window)_window).Close();
         }
