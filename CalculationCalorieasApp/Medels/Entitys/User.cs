@@ -14,6 +14,14 @@ namespace CalculationCalorieasApp.Medels.Entitys
         public byte[] Image { get; set; }
         public Gender Gender { get; set; }
         public StatusUser Status { get; set; }
+        public Goal Goal { get; set; }
+        public Gender Gender { get; set; }
+        public Activ Activ { get; set; }
+        public int Weight { get; set; }
+        public int Height { get; set; }
+        public int Age { get; set; }    
+
+        public int CalPerDay { get; set; }
     }
 
     public enum StatusUser { ADMIN, USER }
