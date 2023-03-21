@@ -36,5 +36,6 @@ namespace CalculationCalorieasApp.Views
         {
             ((MainWindowViewModel)DataContext).Image = await BitmapHelper.GetUserImageAsync(_currentUser);
         }
+
     }
 }
