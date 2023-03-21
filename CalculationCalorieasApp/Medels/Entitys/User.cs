@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalculationCalorieasApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace CalculationCalorieasApp.Medels.Entitys
         public string UserName { get; set; }
         public string Password { get; set; }
         public byte[] Image { get; set; }
+        public Gender Gender { get; set; }
         public StatusUser Status { get; set; }
     }
 
