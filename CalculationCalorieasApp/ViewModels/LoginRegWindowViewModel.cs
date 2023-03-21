@@ -55,7 +55,7 @@ namespace CalculationCalorieasApp.ViewModels
         }
         protected override bool EnterToAppCommand_CanExecute()
         {
-            if(Password == PasswordConfirmation && !string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
+            if(/*Password == PasswordConfirmation && */!string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
             {
                 return true;
             }
