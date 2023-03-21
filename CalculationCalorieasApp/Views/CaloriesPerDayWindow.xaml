@@ -24,6 +24,12 @@
                 <x:Type TypeName="viewModels:Gender"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="ActivEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModels:Activ"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <helpers:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </Window.Resources>
     <Grid>
@@ -54,15 +60,19 @@
                 UpdateSourceTrigger=PropertyChanged}"
                   ></ComboBox>
         <TextBlock Grid.Row="2">Введите ваш текущий вес (в килограммах)</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <TextBlock Grid.Row="3">Введите ваш рост (в сантиметрах)</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <TextBlock Grid.Row="4">Введите ваш возраст (в годах)</TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <TextBlock Grid.Row="5">Выберите вашу активность</TextBlock>
-        <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
-        <Button Grid.Row="6">Рассчитать</Button>
-        <TextBlock Grid.Row="6" Grid.Column="1">Рекомендуемое количество ккал в день:</TextBlock>
+        <ComboBox Grid.Row="5" Grid.Column="1"
+                  x:Name="_activComboBox"
+                      SelectedItem="{Binding SelectedActiv, 
+                Converter={StaticResource EnumDescriptionConverter},
+                UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+        <Button Grid.Row="6" Command="{Binding ResultCommand,UpdateSourceTrigger=PropertyChanged}">Рассчитать</Button>
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Result,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
         <Button Grid.Row="7" Grid.ColumnSpan="2">Выход</Button>
 
     </Grid>

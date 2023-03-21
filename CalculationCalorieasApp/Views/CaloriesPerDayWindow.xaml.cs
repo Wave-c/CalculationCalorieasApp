@@ -30,6 +30,9 @@ namespace CalculationCalorieasApp.Views
             _genderComboBox.ItemsSource =
                (Enum.GetValues(typeof(Gender)) as Gender[])
                .Select(s => s.GetDescription());
+            _activComboBox.ItemsSource =
+               (Enum.GetValues(typeof(Activ)) as Activ[])
+               .Select(s => s.GetDescription());
             DataContext = new CaloriesPerDayWindowViewModel();
         }
     }
