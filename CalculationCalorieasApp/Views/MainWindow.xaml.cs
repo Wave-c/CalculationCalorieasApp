@@ -32,9 +32,19 @@ namespace CalculationCalorieasApp.Views
             DataContext = new MainWindowViewModel(currentUser);
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private void RadioButtonBreakfast_Checked(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)DataContext).Image = await BitmapHelper.GetUserImageAsync(_currentUser);
+            ((MainWindowViewModel)DataContext).Eating = Medels.Enums.Eating.BREAKFAST;
+        }
+
+        private void RadioButtonDinner_Checked(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).Eating = Medels.Enums.Eating.DINNER;
+        }
+
+        private void RadioButtonSupper_Checked(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).Eating = Medels.Enums.Eating.SUPPER;
         }
     }
 }

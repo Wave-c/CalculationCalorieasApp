@@ -12,6 +12,7 @@ namespace CalculationCalorieasApp.Medels.Entitys
         public string UserName { get; set; }
         public string Password { get; set; }
         public byte[] Image { get; set; }
+        public Gender Gender { get; set; }
         public StatusUser Status { get; set; }
         public Goal Goal { get; set; }
         public Gender Gender { get; set; }
