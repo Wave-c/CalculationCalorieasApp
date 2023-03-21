@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace CalculationCalorieasApp.ViewModels
@@ -103,7 +104,21 @@ namespace CalculationCalorieasApp.ViewModels
 
         private void AddProductCommand_Execute()
         {
-            
+            switch(Eating)
+            {
+                case Eating.BREAKFAST:
+                    BreakfastProducts.Append(SelectedProduct);
+                    break;
+                case Eating.DINNER:
+                    DinnerProducts.Append(SelectedProduct);
+                    break;
+                case Eating.SUPPER:
+                    SupperProducts.Append(SelectedProduct);
+                    break;
+                case Eating.NA:
+                    MessageBox.Show("Выберите приём еды", "Error", MessageBoxButton.OK);
+                    break;
+            }
         }
         private bool AddProductCommand_CanExecute()
         {
