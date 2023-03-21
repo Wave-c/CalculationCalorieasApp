@@ -18,9 +18,10 @@ namespace CalculationCalorieasApp.ViewModels
 {
     public class CaloriesPerDayWindowViewModel:BindableBase
     {
+        User User { get; set; }
         public CaloriesPerDayWindowViewModel()
         {
-            Result = "Рекомендуемое количество ккал в день:";
+           // User = user;
         }
         private Goal _selectedGoal;
         public Goal SelectedGoal
@@ -111,7 +112,6 @@ namespace CalculationCalorieasApp.ViewModels
                 i = 5;
             else i = -161;
             double result = ((9.99 * Convert.ToInt32(Weight)) + (6.25 * Convert.ToInt32(Height)) - (4.92 * Convert.ToInt32(Age)) + (i))* SwitchEnumHelper.EnumConverter(SelectedActiv);
-            int j = 0;
             switch (SelectedGoal)
             {
                 case Goal.Increase:
@@ -124,9 +124,31 @@ namespace CalculationCalorieasApp.ViewModels
                     break;
 
             }
-            Result= $"Рекомендуемое количество ккал в день: {result.ToString()}";
+          
+            Result= ((int)result).ToString();
         }
         public bool ResultCommand_CanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(Weight) &&
+                !string.IsNullOrWhiteSpace(Height) &&
+            !string.IsNullOrWhiteSpace(Age);
+        }
+        private DelegateCommand _saveCommand;
+        public DelegateCommand SaveCommand =>
+                    _saveCommand ??= new DelegateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
+
+        public void SaveCommand_Execute()
+        {
+            User.Activ = SelectedActiv;
+            User.Gender = SelectedGender;
+            User.Goal = SelectedGoal;
+            User.Weight = Convert.ToInt32(Weight);
+            User.Height= Convert.ToInt32(Height);
+            User.Age= Convert.ToInt32(Age);
+            User.CalPerDay = Convert.ToInt32(Result);
+
+        }
+        public bool SaveCommand_CanExecute()
         {
             return !string.IsNullOrWhiteSpace(Weight) &&
                 !string.IsNullOrWhiteSpace(Height) &&
