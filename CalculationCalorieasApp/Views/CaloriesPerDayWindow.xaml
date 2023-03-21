@@ -88,8 +88,9 @@
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"></ComboBox>
         <Button Margin="150 20 100 15" Grid.Row="6" Command="{Binding ResultCommand,UpdateSourceTrigger=PropertyChanged}" Background="LightGreen" >Рассчитать</Button>
-        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Result,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-        <Button Margin="150 10 100 25" Grid.Row="7" Grid.ColumnSpan="2" Background="LightGreen" >Выход</Button>
-
+        <TextBlock  Margin="50 20 140 15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1"> Рекомендуемое количество ккал в день: </TextBlock>
+        <TextBlock  Margin="300 20 70 15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1" Text="{Binding Result,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+        <Button Margin="150 10 100 25" Grid.Row="7"  Background="LightGreen" >Выход</Button>
+        <Button Margin="110 10 140 25" Grid.Row="7" Grid.Column="1" Background="LightGreen" >Сохранить данные </Button>
     </Grid>
 </Window>
