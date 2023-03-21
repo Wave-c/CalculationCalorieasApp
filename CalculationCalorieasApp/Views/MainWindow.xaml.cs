@@ -46,5 +46,6 @@ namespace CalculationCalorieasApp.Views
         {
             ((MainWindowViewModel)DataContext).Eating = Medels.Enums.Eating.SUPPER;
         }
+
     }
 }
