@@ -12,6 +12,21 @@
         mc:Ignorable="d"
         Title="CaloriesPerDayWindow" Height="450" Width="800">
     <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <ObjectDataProvider x:Key="GoalsEnum" MethodName="GetValues"
                             ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -71,9 +86,9 @@
                       SelectedItem="{Binding SelectedActiv, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"></ComboBox>
-        <Button Grid.Row="6" Command="{Binding ResultCommand,UpdateSourceTrigger=PropertyChanged}">Рассчитать</Button>
+        <Button Grid.Row="6" Command="{Binding ResultCommand,UpdateSourceTrigger=PropertyChanged}" Background="LightGreen" >Рассчитать</Button>
         <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Result,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-        <Button Grid.Row="7" Grid.ColumnSpan="2">Выход</Button>
+        <Button Grid.Row="7" Grid.ColumnSpan="2" Background="LightGreen" >Выход</Button>
 
     </Grid>
 </Window>
