@@ -53,11 +53,11 @@ namespace CalculationCalorieasApp.ViewModels
                 //Activ = 0,
                 //Goal = 0
             };
-            //using (var dbContext = new AppDBContext())
-            //{
-            //    await dbContext.Users.AddAsync(addedUser);
-            //    await dbContext.SaveChangesAsync();
-            //}
+            using (var dbContext = new AppDBContext())
+            {
+                await dbContext.Users.AddAsync(addedUser);
+                await dbContext.SaveChangesAsync();
+            }
             base.EnterToAppCommand_Execute();
         }
         protected override bool EnterToAppCommand_CanExecute()

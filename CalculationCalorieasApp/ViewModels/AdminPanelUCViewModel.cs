@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using CalculationCalorieasApp.Medels;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,10 @@ namespace CalculationCalorieasApp.ViewModels
         }
         private void AddProductCommand_Execute()
         {
-
+            //using(var dbContext = new AppDBContext())
+            //{
+            //    dbContext.Products.Add()
+            //}
         }
     }
 }
