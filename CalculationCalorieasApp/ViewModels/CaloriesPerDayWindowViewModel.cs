@@ -13,15 +13,16 @@ using static System.Reflection.Metadata.BlobBuilder;
 using System.Windows;
 using Prism.Mvvm;
 using CalculationCalorieasApp.Helpers;
+using CalculationCalorieasApp.Medels;
 
 namespace CalculationCalorieasApp.ViewModels
 {
     public class CaloriesPerDayWindowViewModel:BindableBase
     {
         User User { get; set; }
-        public CaloriesPerDayWindowViewModel()
+        public CaloriesPerDayWindowViewModel(User user)
         {
-           // User = user;
+            User = user;
         }
         private Goal _selectedGoal;
         public Goal SelectedGoal
@@ -137,6 +138,32 @@ namespace CalculationCalorieasApp.ViewModels
         public DelegateCommand SaveCommand =>
                     _saveCommand ??= new DelegateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
 
+        public async void SaveCommand_Execute()
+        {
+            User.Activ = SelectedActiv;
+            User.Gender = SelectedGender;
+            User.Goal = SelectedGoal;
+            User.Weight = Convert.ToInt32(Weight);
+            User.Height= Convert.ToInt32(Height);
+            User.Age= Convert.ToInt32(Age);
+            User.CalPerDay = Convert.ToInt32(Result);
+
+            using (var dbContext = new AppDBContext())
+            {
+                await dbContext.Users.AddAsync(User);
+                await dbContext.SaveChangesAsync();
+            }
+        }
+        public bool SaveCommand_CanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(Weight) &&
+                !string.IsNullOrWhiteSpace(Height) &&
+            !string.IsNullOrWhiteSpace(Age);
+        }
+        private DelegateCommand _saveCommand;
+        public DelegateCommand SaveCommand =>
+                    _saveCommand ??= new DelegateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
+
         public void SaveCommand_Execute()
         {
             User.Activ = SelectedActiv;
@@ -170,7 +197,9 @@ namespace CalculationCalorieasApp.ViewModels
         [Description("Мужчина")]
         Man,
         [Description("Женщина")]
-        Woman
+        Woman,
+        [Description("Пол не указан")]
+        No
     }
     public enum Activ
     {
