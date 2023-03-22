@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         mc:Ignorable="d"
-        Title="Login" Height="400" Width="400"
+        Title="Авторизация" Height="400" Width="400"
         d:DataContext="{d:DesignInstance Type=viewModels:LoginWindowViewModel}">
     <Window.Resources>
         <Style TargetType="Button">
