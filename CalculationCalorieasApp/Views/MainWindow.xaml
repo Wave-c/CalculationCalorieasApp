@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
         mc:Ignorable="d"
-        Title="Рассчет килокаллорий" Height="684" Width="784"
+        Title="Рассчет килокаллорий" Height="710" Width="800"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>

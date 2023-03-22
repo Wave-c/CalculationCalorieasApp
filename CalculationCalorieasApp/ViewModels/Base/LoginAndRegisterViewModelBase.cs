@@ -61,8 +61,8 @@ namespace CalculationCalorieasApp.ViewModels.Base
                     return;
                 }
 
-                var caloriesPerDayWindow = new CaloriesPerDayWindow(currentUser);
-                caloriesPerDayWindow.Show();
+                var mainWindow = new MainWindow(currentUser);
+                mainWindow.Show();
             }
             ((Window)_window).Close();
         }

@@ -1,6 +1,7 @@
 ﻿using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.Medels.Extensions;
 using CalculationCalorieasApp.ViewModels;
+using CalculationCalorieasApp.Views.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace CalculationCalorieasApp.Views
     /// <summary>
     /// Логика взаимодействия для CaloriesPerDayWindow.xaml
     /// </summary>
-    public partial class CaloriesPerDayWindow : Window
+    public partial class RegWindow : Window, ILoginOrRegisterWindow
     {
-        public CaloriesPerDayWindow(User user)
+        public RegWindow()
         {
             InitializeComponent();
             _goalComboBox.ItemsSource =
@@ -34,7 +35,12 @@ namespace CalculationCalorieasApp.Views
             _activComboBox.ItemsSource =
                (Enum.GetValues(typeof(Activ)) as Activ[])
                .Select(s => s.GetDescription());
-            DataContext = new CaloriesPerDayWindowViewModel(user);
+            DataContext = new RegWindowViewModel(this);
         }
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ((RegWindowViewModel)DataContext).Password = _passwordBox.Password;
+        }
+
     }
 }

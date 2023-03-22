@@ -15,15 +15,17 @@ using Prism.Mvvm;
 using CalculationCalorieasApp.Helpers;
 using CalculationCalorieasApp.Medels;
 using CalculationCalorieasApp.Views;
+using CalculationCalorieasApp.ViewModels.Base;
+using CalculationCalorieasApp.Views.Interfaces;
+using Messager.Helpers;
 
 namespace CalculationCalorieasApp.ViewModels
 {
-    public class CaloriesPerDayWindowViewModel:BindableBase
+    public class RegWindowViewModel : LoginAndRegisterViewModelBase
     {
-        User User { get; set; }
-        public CaloriesPerDayWindowViewModel(User user)
-        {
-            User = user;
+        private string _passwordConfirmation;
+        public RegWindowViewModel(ILoginOrRegisterWindow window) : base(window)
+        {        
         }
         private Goal _selectedGoal;
         public Goal SelectedGoal
@@ -33,7 +35,7 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _selectedGoal = value;
                 RaisePropertyChanged();
-                ResultCommand.RaiseCanExecuteChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -45,7 +47,7 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _selectedGender = value;
                 RaisePropertyChanged();
-                ResultCommand.RaiseCanExecuteChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
         private Activ _selectedActiv;
@@ -56,7 +58,7 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _selectedActiv = value;
                 RaisePropertyChanged();
-                ResultCommand.RaiseCanExecuteChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
         private string _weight;
@@ -67,7 +69,7 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _weight = value;
                 RaisePropertyChanged();
-                ResultCommand.RaiseCanExecuteChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
         private string _height;
@@ -78,7 +80,7 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _height = value;
                 RaisePropertyChanged();
-                ResultCommand.RaiseCanExecuteChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
         private string _age;
@@ -89,7 +91,7 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _age = value;
                 RaisePropertyChanged();
-                ResultCommand.RaiseCanExecuteChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
         private string _result;
@@ -100,69 +102,88 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _result = value;
                 RaisePropertyChanged();
-                ResultCommand.RaiseCanExecuteChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
         }
-        private DelegateCommand _resultCommand;
-        public DelegateCommand ResultCommand =>
-                    _resultCommand ??= new DelegateCommand(ResultCommand_Execute, ResultCommand_CanExecute);
-
-        public void ResultCommand_Execute()
+        public string PasswordConfirmation
         {
-            int i = 0;
-            if (SelectedGender == Gender.Man)
-                i = 5;
-            else i = -161;
-            double result = ((9.99 * Convert.ToInt32(Weight)) + (6.25 * Convert.ToInt32(Height)) - (4.92 * Convert.ToInt32(Age)) + (i))* SwitchEnumHelper.EnumConverter(SelectedActiv);
-            switch (SelectedGoal)
+            get => _passwordConfirmation;
+            set
             {
-                case Goal.Increase:
-                    result += (result /100*20);
-                    break;
-                case Goal.Decrease:
-                    result -= (result / 100 * 20);
-                    break;
-                case Goal.Save:
-                    break;
-
+                _passwordConfirmation = value;
+                RaisePropertyChanged();
+                EnterToAppCommand.RaiseCanExecuteChanged();
             }
-          
-            Result= ((int)result).ToString();
         }
-        public bool ResultCommand_CanExecute()
-        {
-            return !string.IsNullOrWhiteSpace(Weight) &&
-                !string.IsNullOrWhiteSpace(Height) &&
-            !string.IsNullOrWhiteSpace(Age);
-        }
-        private DelegateCommand _saveCommand;
-        public DelegateCommand SaveCommand =>
-                    _saveCommand ??= new DelegateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
+        private DelegateCommand _openLoginWindowCommand;
+        public DelegateCommand OpenLoginWindowCommand => _openLoginWindowCommand ??= new DelegateCommand(OpenLoginWindowCommand_Execute);
 
-        public async void SaveCommand_Execute()
+        protected async override void EnterToAppCommand_Execute()
         {
-            User.Activ = SelectedActiv;
-            User.Gender = SelectedGender;
-            User.Goal = SelectedGoal;
-            User.Weight = Convert.ToInt32(Weight);
-            User.Height= Convert.ToInt32(Height);
-            User.Age= Convert.ToInt32(Age);
-            User.CalPerDay = Convert.ToInt32(Result);
-
             using (var dbContext = new AppDBContext())
             {
-                var currentUser = dbContext.Users.Where(x => x.Id == User.Id).FirstOrDefault();               
-                await dbContext.Users.AddAsync(User);
-                await dbContext.SaveChangesAsync();
+                var currentUser = dbContext.Users.Where(x => x.UserName == UserName).FirstOrDefault();
+                if (currentUser != null)
+                {
+                    MessageBox.Show("Такой пользователь уже существует, выберите другое имя", "Ошибка", MessageBoxButton.OK);
+                    return;
+                }
+                int i = 0;
+                if (SelectedGender == Gender.Man)
+                    i = 5;
+                else i = -161;
+                double result = ((9.99 * Convert.ToInt32(Weight)) + (6.25 * Convert.ToInt32(Height)) - (4.92 * Convert.ToInt32(Age)) + (i)) * SwitchEnumHelper.EnumConverter(SelectedActiv);
+                switch (SelectedGoal)
+                {
+                    case Goal.Increase:
+                        result += (result / 100 * 20);
+                        break;
+                    case Goal.Decrease:
+                        result -= (result / 100 * 20);
+                        break;
+                    case Goal.Save:
+                        break;
+
+                }
+                Result = ((int)result).ToString();
+                var addedUser = new User()
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = UserName,
+                    Password = Encryptor.GenerateHash(Password),
+                    Status = StatusUser.USER,
+                    Image = new byte[0],
+                    Gender = SelectedGender,
+                    Goal = SelectedGoal,
+                    Activ = SelectedActiv,
+                    Weight = Convert.ToInt32(Weight),
+                    Height = Convert.ToInt32(Height),
+                    Age = Convert.ToInt32(Age),
+                    CalPerDay = Convert.ToInt32(Result)
+
+                };
+                    await dbContext.Users.AddAsync(addedUser);
+                    await dbContext.SaveChangesAsync();
+
+                base.EnterToAppCommand_Execute();
+
             }
-            var mainWindow = new MainWindow(User);
-            mainWindow.Show();
+            
         }
-        public bool SaveCommand_CanExecute()
+        protected override bool EnterToAppCommand_CanExecute()
         {
             return !string.IsNullOrWhiteSpace(Weight) &&
                 !string.IsNullOrWhiteSpace(Height) &&
-            !string.IsNullOrWhiteSpace(Age);
+            !string.IsNullOrWhiteSpace(Age) &&
+            !string.IsNullOrWhiteSpace(UserName) &&
+            !string.IsNullOrWhiteSpace(Password);         
+        }
+
+        private void OpenLoginWindowCommand_Execute()
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            ((RegWindow)_window).Close();
         }
 
     }

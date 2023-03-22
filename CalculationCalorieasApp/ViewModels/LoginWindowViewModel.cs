@@ -34,7 +34,7 @@ namespace CalculationCalorieasApp.ViewModels
 
         private void OpenLoginRegWindowCommand_Execute()
         {
-            var loginWindow = new LoginRegWindow();
+            var loginWindow = new RegWindow();
             loginWindow.Show();
             ((LoginWindow)_window).Close();
         }
