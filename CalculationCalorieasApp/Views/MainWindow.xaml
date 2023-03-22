@@ -1,4 +1,5 @@
 ﻿<Window x:Class="CalculationCalorieasApp.Views.MainWindow"
+        Loaded="Window_Loaded"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +9,7 @@
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
         mc:Ignorable="d"
-        Title="Рассчет килокаллорий" Height="684" Width="784"
+        Title="Рассчет килокаллорий" Height="784" Width="784"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
@@ -36,7 +37,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
 
         <Border Grid.ColumnSpan="2" Grid.RowSpan="2" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
@@ -61,7 +62,7 @@
             <Label Content="Ужин" Height="35" Width="86" FontSize="20" Foreground="Black" Margin="113,346,126,-114"></Label>
             <ListBox ItemsSource="{Binding SupperProducts}" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
 
-            <Button Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
+            <Button Command="{Binding }" Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
             <Button Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"

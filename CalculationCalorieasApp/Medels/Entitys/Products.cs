@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace CalculationCalorieasApp.Medels.Entitys
 {
-    public class Products:Entity
+    public class Product : Entity
     {
       
-        public string Name;
-        public int Calories;
+        public string Name { get; set; }
+        public int Calories { get; set; }
         
 
-        public Products(Guid id, string name, int calories)
+        public Product(Guid id, string name, int calories)
         {
             Id=id;
             Name = name;

@@ -58,7 +58,11 @@ namespace CalculationCalorieasApp.ViewModels
                 await dbContext.Users.AddAsync(addedUser);
                 await dbContext.SaveChangesAsync();
             }
-            base.EnterToAppCommand_Execute();
+            var caloriesPerDayWindow = new CaloriesPerDayWindow(addedUser);
+            if((bool)caloriesPerDayWindow.ShowDialog())
+            {
+                base.EnterToAppCommand_Execute();
+            }
         }
         protected override bool EnterToAppCommand_CanExecute()
         {
