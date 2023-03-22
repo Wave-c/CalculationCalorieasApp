@@ -1,4 +1,5 @@
-﻿using CalculationCalorieasApp.Medels.Extensions;
+﻿using CalculationCalorieasApp.Medels.Entitys;
+using CalculationCalorieasApp.Medels.Extensions;
 using CalculationCalorieasApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace CalculationCalorieasApp.Views
     /// </summary>
     public partial class CaloriesPerDayWindow : Window
     {
-        public CaloriesPerDayWindow()
+        public CaloriesPerDayWindow(User user)
         {
             InitializeComponent();
             _goalComboBox.ItemsSource =
@@ -33,7 +34,7 @@ namespace CalculationCalorieasApp.Views
             _activComboBox.ItemsSource =
                (Enum.GetValues(typeof(Activ)) as Activ[])
                .Select(s => s.GetDescription());
-            DataContext = new CaloriesPerDayWindowViewModel();
+            DataContext = new CaloriesPerDayWindowViewModel(user);
         }
     }
 }
