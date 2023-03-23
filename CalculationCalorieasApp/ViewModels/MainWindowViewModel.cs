@@ -15,25 +15,31 @@ using System.Windows.Media.Imaging;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
+
 namespace CalculationCalorieasApp.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        public class Product { }
         private User _currentUser;
+        private int _breakfastCcal;
+        private int _dinnerCcal;
+        private int _supperCcal;
         private int _calorieAllowance;
         private int _sumCaloriesPerDay;
-        private IEnumerable<Product> _products;
-        private IEnumerable<Product> _breakfastProducts;
-        private IEnumerable<Product> _dinnerProducts;
-        private IEnumerable<Product> _supperProducts;
+        private IEnumerable<Product> _products = new List<Product>();
+        private IEnumerable<Product> _breakfastProducts = new List<Product>();
+        private IEnumerable<Product> _dinnerProducts = new List<Product>();
+        private IEnumerable<Product> _supperProducts = new List<Product>();
         private Product _selectedProduct;
+        private Eating _eating;
+
 
         public MainWindowViewModel(User currentUser)
         {
             _currentUser = currentUser;
             HasUserAdminOptions = currentUser.Status == StatusUser.ADMIN ? true : false;
             Eating = Eating.NA;
+            
         }
 
         public Product SelectedProduct
@@ -43,7 +49,37 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 _selectedProduct = value;
                 RaisePropertyChanged();
+                AddProductCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public int BreakfastCcal
+        {
+            get=> _breakfastCcal;
+            set
+            {
+                _breakfastCcal = value; 
+                RaisePropertyChanged();
+            }
+        }
+        public int DinnerCcal
+        {
+            get => _dinnerCcal;
+            set
+            {
+                _dinnerCcal = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int SupperCcal
+        {
+            get => _supperCcal;
+            set
+            {
+                _supperCcal = value;
+                RaisePropertyChanged();
+            }   
         }
         public IEnumerable<Product> SupperProducts
         {
@@ -81,7 +117,15 @@ namespace CalculationCalorieasApp.ViewModels
                 RaisePropertyChanged();
             }
         }
-        public Eating Eating { get; set; }
+        public Eating Eating
+        {
+            get => _eating;
+            set
+            {
+                _eating = value;
+                AddProductCommand.RaiseCanExecuteChanged();
+            }
+        }
         public int SumCaloriesPerDay
         {
             get => _sumCaloriesPerDay;
@@ -106,31 +150,105 @@ namespace CalculationCalorieasApp.ViewModels
         private DelegateCommand _addProductCommand;
         public DelegateCommand AddProductCommand => _addProductCommand ??= new DelegateCommand(AddProductCommand_Execute, AddProductCommand_CanExecute);
 
+        private DelegateCommand _removeProductCommand;
+        public DelegateCommand RemoveProductCommand => _removeProductCommand ??= new DelegateCommand(RemoveProductCommand_Execute, RemoveProductCommand_CanExecute);
+
+        private DelegateCommand _countCcalCommad;
+        public DelegateCommand CountCcalProductCommand => _countCcalCommad ??= new DelegateCommand(CountCcalProductCommand_Execute, CountCcalProductCommand_CanExecute);
+        private void RemoveProductCommand_Execute()
+        {
+            
+            var breakfastProduct=BreakfastProducts.ToList();
+            var dinnerProduct=DinnerProducts.ToList();
+            var supperProduct=SupperProducts.ToList();
+
+            if (breakfastProduct.Contains(SelectedProduct))
+            {
+                breakfastProduct.Remove(SelectedProduct);
+                BreakfastProducts = breakfastProduct;
+                SelectedProduct = null;
+            }
+            else if(dinnerProduct.Contains(SelectedProduct))
+            { dinnerProduct.Remove(SelectedProduct);
+                DinnerProducts = dinnerProduct;
+                SelectedProduct = null;
+            }
+            else if(supperProduct.Contains(SelectedProduct))
+            { 
+                supperProduct.Remove(SelectedProduct);
+                SupperProducts = supperProduct;
+                SelectedProduct = null;
+            }
+
+            CountCcalProductCommand_Execute();
+        }
+        private bool RemoveProductCommand_CanExecute()
+        {
+            return SupperProducts.Count() != 0 || DinnerProducts.Count() != 0 || BreakfastProducts.Count() != 0;
+        }
+
         private void AddProductCommand_Execute()
         {
-            switch(Eating)
+           
+            switch (Eating)
             {
                 case Eating.BREAKFAST:
-                    BreakfastProducts.Append(SelectedProduct);
+                    BreakfastProducts = BreakfastProducts.Append(SelectedProduct);
                     break;
                 case Eating.DINNER:
-                    DinnerProducts.Append(SelectedProduct);
+                    DinnerProducts = DinnerProducts.Append(SelectedProduct);
                     break;
                 case Eating.SUPPER:
-                    SupperProducts.Append(SelectedProduct);
+                    SupperProducts = SupperProducts.Append(SelectedProduct);
                     break;
                 case Eating.NA:
                     MessageBox.Show("Выберите приём еды", "Error", MessageBoxButton.OK);
                     break;
             }
+            
+           
         }
         private bool AddProductCommand_CanExecute()
         {
             return Eating != Eating.NA && SelectedProduct != null;
         }
 
-       
+        private void CountCcalProductCommand_Execute()
+        {
+            BreakfastCcal = 0;
+            DinnerCcal = 0;
+            SupperCcal = 0;
+            var breakfastProduct = BreakfastProducts.ToList();
+            var dinnerProduct = DinnerProducts.ToList();
+            var supperProduct = SupperProducts.ToList();
+            foreach( var product in breakfastProduct)
+            {
+                BreakfastCcal += product.Calories;
+            }
+            foreach( var product in dinnerProduct)
+            {
+                DinnerCcal+= product.Calories;
+            }
+            foreach ( var product in supperProduct)
+            {
+                SupperCcal+= product.Calories;
+            }
 
+            SumCaloriesPerDay = BreakfastCcal + DinnerCcal + SupperCcal;
+
+        }
+        private bool CountCcalProductCommand_CanExecute()
+        {
+            return SelectedProduct != null;
+        }
+
+        public async Task UpdateProducts()
+        {
+            using (var dbContext = new AppDBContext())
+            {
+                Products = await dbContext.Products.ToListAsync();
+            }
+        }
 
 
     }

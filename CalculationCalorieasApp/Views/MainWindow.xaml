@@ -64,8 +64,8 @@
             <ListBox ItemsSource="{Binding SupperProducts}" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
             <Label Content="{Binding SupperCcal}" Height="30" Width="60" Margin="308,405,24,-151" ></Label>
 
-            <Button Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
-            <Button Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
+            <Button Content=" Убрать продукт" Command="{Binding RemoveProductCommand}"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
+            <Button Command="{Binding CountCcalProductCommand}" Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
          Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BoolToVisConverter}}">
