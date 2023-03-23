@@ -25,7 +25,7 @@ namespace CalculationCalorieasApp.ViewModels
     {
         private string _passwordConfirmation;
         public RegWindowViewModel(ILoginOrRegisterWindow window) : base(window)
-        {        
+        {
         }
         private Goal _selectedGoal;
         public Goal SelectedGoal

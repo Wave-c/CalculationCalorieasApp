@@ -23,7 +23,7 @@ namespace CalculationCalorieasApp.Views
     /// </summary>
     public partial class RegWindow : Window, ILoginOrRegisterWindow
     {
-        public RegWindow()
+        public RegWindow(User currentUser)
         {
             InitializeComponent();
             _goalComboBox.ItemsSource =
