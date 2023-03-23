@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CalculationCalorieasApp.Medels.Entitys
 {
-    internal class CountCcal
+    public class CountCcal
     {
+        public Guid ProductsId { get; set; }
     }
 }

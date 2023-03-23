@@ -1,4 +1,5 @@
 ﻿using CalculationCalorieasApp.Helpers;
+using CalculationCalorieasApp.Medels;
 using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.Medels.Enums;
 using Prism.Commands;
@@ -127,5 +128,10 @@ namespace CalculationCalorieasApp.ViewModels
         {
             return Eating != Eating.NA && SelectedProduct != null;
         }
+
+       
+
+
+
     }
 }

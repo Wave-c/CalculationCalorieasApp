@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace CalculationCalorieasApp.Medels.Entitys
 {
-    public class Products:Entity
+    public class Product:Entity
     {
       
         public string Name;
         public int Calories;
         
 
-        public Products(Guid id, string name, int calories)
+        public Product(Guid id, string name, int calories)
         {
             Id=id;
             Name = name;
@@ -24,7 +24,7 @@ namespace CalculationCalorieasApp.Medels.Entitys
 
         public override string ToString()
         {
-            return $"{Name} - {Calories}kcal";
+            return $"{Id}-{Name} - {Calories}ккал";
         }
     }
 }
