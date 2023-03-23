@@ -50,6 +50,7 @@ namespace CalculationCalorieasApp.Views
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            _adminPanel.DataContext = new AdminPanelUCViewModel(((MainWindowViewModel)DataContext));
             await ((MainWindowViewModel)DataContext).UpdateProducts();
         }
     }

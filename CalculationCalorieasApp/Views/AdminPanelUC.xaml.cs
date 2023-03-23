@@ -24,7 +24,6 @@ namespace CalculationCalorieasApp.Views
         public AdminPanelUC()
         {
             InitializeComponent();
-            DataContext = new AdminPanelUCViewModel();
         }
     }
 }

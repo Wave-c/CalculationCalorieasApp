@@ -70,7 +70,7 @@
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
          Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BoolToVisConverter}}">
-            <views:AdminPanelUC/>
+            <views:AdminPanelUC x:Name="_adminPanel"/>
         </Grid>
 
     </Grid>
