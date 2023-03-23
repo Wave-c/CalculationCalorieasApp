@@ -29,7 +29,7 @@ namespace CalculationCalorieasApp.ViewModels
             _currentUser = currentUser;
             HasUserAdminOptions = currentUser.Status == StatusUser.ADMIN ? true : false;
             Eating = Eating.NA;
-            
+            CalorieAllowance = currentUser.CalPerDay;
         }
 
         public Product SelectedProduct
