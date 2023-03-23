@@ -11,23 +11,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CalculationCalorieasApp.ViewModels
 {
     public class LoginRegWindowViewModel : LoginAndRegisterViewModelBase
     {
-        private string _passwordConfirmation;
+        private string _email;
 
         public LoginRegWindowViewModel(ILoginOrRegisterWindow window) : base(window)
         {
         }
 
-        public string PasswordConfirmation
+        public string Email
         {
-            get => _passwordConfirmation;
+            get => _email;
             set
             {
-                _passwordConfirmation = value;
+                _email = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
             }
@@ -45,20 +46,19 @@ namespace CalculationCalorieasApp.ViewModels
                 Password = Encryptor.GenerateHash(Password),
                 Status = StatusUser.USER,
                 Image = new byte[0],
-                //Weight = 0,
-                //Height = 0,
-                //Age = 0,
-                //CalPerDay = 0,
-                //Gender = 0,
-                //Activ = 0,
-                //Goal = 0
+                Email = Email
             };
             using (var dbContext = new AppDBContext())
             {
+                if(dbContext.Users.Where(x=>x.UserName == addedUser.UserName).FirstOrDefault() != null)
+                {
+                    MessageBox.Show("Такой пользователь уже существует, выберите другое имя", "Ошибка", MessageBoxButton.OK);
+                    return;
+                }
                 await dbContext.Users.AddAsync(addedUser);
                 await dbContext.SaveChangesAsync();
             }
-            var caloriesPerDayWindow = new RegWindow(addedUser);
+            var caloriesPerDayWindow = new CaloriesPerDayWindow(addedUser);
             if ((bool)caloriesPerDayWindow.ShowDialog())
             {
                 base.EnterToAppCommand_Execute();

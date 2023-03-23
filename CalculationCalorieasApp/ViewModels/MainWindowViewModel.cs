@@ -18,9 +18,9 @@ namespace CalculationCalorieasApp.ViewModels
         private int _calorieAllowance;
         private int _sumCaloriesPerDay;
         private IEnumerable<Product> _products = new List<Product>();
-        private IEnumerable<Product> _breakfastProducts = new List<Product>();
-        private IEnumerable<Product> _dinnerProducts = new List<Product>();
-        private IEnumerable<Product> _supperProducts = new List<Product>();
+        private List<Product> _breakfastProducts = new List<Product>();
+        private List<Product> _dinnerProducts = new List<Product>();
+        private List<Product> _supperProducts = new List<Product>();
         private Product _selectedProduct;
         private Eating _eating;
 
@@ -30,6 +30,7 @@ namespace CalculationCalorieasApp.ViewModels
             HasUserAdminOptions = currentUser.Status == StatusUser.ADMIN ? true : false;
             Eating = Eating.NA;
             CalorieAllowance = currentUser.CalPerDay;
+            SumCaloriesPerDay = 0;
         }
 
         public Product SelectedProduct
@@ -42,31 +43,34 @@ namespace CalculationCalorieasApp.ViewModels
                 AddProductCommand.RaiseCanExecuteChanged();
             }
         }
-        public IEnumerable<Product> SupperProducts
+        public List<Product> SupperProducts
         {
             get => _supperProducts;
             set
             {
                 _supperProducts = value;
                 RaisePropertyChanged();
+                RemoveProductCommand.RaiseCanExecuteChanged();
             }
         }
-        public IEnumerable<Product> DinnerProducts
+        public List<Product> DinnerProducts
         {
             get => _dinnerProducts;
             set
             {
                 _dinnerProducts = value;
                 RaisePropertyChanged();
+                RemoveProductCommand.RaiseCanExecuteChanged();
             }
         }
-        public IEnumerable<Product> BreakfastProducts
+        public List<Product> BreakfastProducts
         {
             get => _breakfastProducts;
             set
             {
                 _breakfastProducts = value;
                 RaisePropertyChanged();
+                RemoveProductCommand.RaiseCanExecuteChanged();
             }
         }
         public IEnumerable<Product> Products
@@ -116,11 +120,16 @@ namespace CalculationCalorieasApp.ViewModels
 
         private void RemoveProductCommand_Execute()
         {
-
+            BreakfastProducts.ToList().Remove(SelectedProduct);
+            BreakfastProducts = BreakfastProducts;
+            DinnerProducts.ToList().Remove(SelectedProduct);
+            DinnerProducts = DinnerProducts;
+            SupperProducts.ToList().Remove(SelectedProduct);
+            SupperProducts = SupperProducts;
         }
         private bool RemoveProductCommand_CanExecute()
         {
-            return SupperProducts.Count() != 0 || DinnerProducts.Count() != 0 || BreakfastProducts.Count() != 0;
+            return SupperProducts.Count != 0 || DinnerProducts.Count != 0 || BreakfastProducts.Count != 0;
         }
 
         private void AddProductCommand_Execute()
@@ -128,18 +137,19 @@ namespace CalculationCalorieasApp.ViewModels
             switch(Eating)
             {
                 case Eating.BREAKFAST:
-                    BreakfastProducts = BreakfastProducts.Append(SelectedProduct);
+                    BreakfastProducts = BreakfastProducts.Append(SelectedProduct).ToList();
                     break;
                 case Eating.DINNER:
-                    DinnerProducts = DinnerProducts.Append(SelectedProduct);
+                    DinnerProducts = DinnerProducts.Append(SelectedProduct).ToList();
                     break;
                 case Eating.SUPPER:
-                    SupperProducts = SupperProducts.Append(SelectedProduct);
+                    SupperProducts = SupperProducts.Append(SelectedProduct).ToList();
                     break;
                 case Eating.NA:
                     MessageBox.Show("Выберите приём еды", "Error", MessageBoxButton.OK);
                     break;
             }
+            SumCaloriesPerDay += SelectedProduct.Calories;
         }
         private bool AddProductCommand_CanExecute()
         {

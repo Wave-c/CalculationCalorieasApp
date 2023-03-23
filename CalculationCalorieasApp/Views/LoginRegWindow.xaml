@@ -34,7 +34,7 @@
                 <Label Content="Password" Foreground="Black"/>
                 <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" x:Name="_passwordBox" Background="#545d6a" Foreground="Black"  FontSize="18"/>
                 <Label Content="Email" Foreground="Black"/>
-                <TextBox  Background="#545d6a" Foreground="Black"  FontSize="18"/>
+                <TextBox Text="{Binding Email}" Background="#545d6a" Foreground="Black"  FontSize="18"/>
                 <DockPanel>
                     <Button Content="Зарегистрироваться" Margin="0 20 0 0" HorizontalAlignment="Center" Background="Firebrick"
                     Foreground="White"  FontSize="17" Height="30" Width="180"

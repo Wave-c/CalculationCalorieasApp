@@ -1,0 +1,96 @@
+﻿<Window x:Class="CalculationCalorieasApp.Views.CaloriesPerDayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
+        xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
+        xmlns:entities="clr-namespace:CalculationCalorieasApp.Medels.Entitys"
+        xmlns:system="clr-namespace:System;assembly=mscorlib" 
+        xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
+         d:DataContext="{d:DesignInstance Type=viewModels:CaloriesPerDayWindowViewModel}"
+        mc:Ignorable="d"
+        Title="CaloriesPerDayWindow" Height="550" Width="850">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ObjectDataProvider x:Key="GoalsEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModels:Goal"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="GenderEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModels:Gender"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="ActivEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModels:Activ"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <helpers:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.ColumnSpan="2" Grid.RowSpan="8" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
+        <TextBlock FontSize="15" Margin="230 20 60 15">Выберите цель</TextBlock>
+        <ComboBox Margin="50 20 70 15" Grid.Column="1" x:Name="_goalComboBox"
+                      SelectedItem="{Binding SelectedGoal, 
+                Converter={StaticResource EnumDescriptionConverter},
+                UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="1" FontSize="15" Margin="240 20 60 15">Выберите пол</TextBlock>
+        <ComboBox Margin="50 20 70 15" Grid.Row="1" Grid.Column="1"
+                  x:Name="_genderComboBox"
+                      SelectedItem="{Binding SelectedGender, 
+                Converter={StaticResource EnumDescriptionConverter},
+                UpdateSourceTrigger=PropertyChanged}"
+                  ></ComboBox>
+        <TextBlock Grid.Row="2" FontSize="15" Margin="50 20 55 15">Введите ваш текущий вес (в килограммах)</TextBlock>
+        <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Grid.Row="2" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBlock Grid.Row="3" FontSize="15" Margin="105 20 60 15">Введите ваш рост (в сантиметрах)</TextBlock>
+        <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Grid.Row="3" Grid.Column="1" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBlock Grid.Row="4" FontSize="15" Margin="130 20 60 15">Введите ваш возраст (в годах)</TextBlock>
+        <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Grid.Row="4" Grid.Column="1" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBlock Grid.Row="5" FontSize="15" Margin="150 20 60 15">Выберите вашу активность</TextBlock>
+        <ComboBox Margin="50 20 70 15" Grid.Row="5" Grid.Column="1"
+                  x:Name="_activComboBox"
+                      SelectedItem="{Binding SelectedActiv, 
+                Converter={StaticResource EnumDescriptionConverter},
+                UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+        <Button Margin="150 20 100 15" Grid.Row="6" Command="{Binding ResultCommand,UpdateSourceTrigger=PropertyChanged}" Background="LightGreen" >Рассчитать</Button>
+        <TextBlock  Margin="50 20 140 15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1"> Рекомендуемое количество ккал в день: </TextBlock>
+        <TextBlock  Margin="300 20 70 15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1" Text="{Binding Result,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+        <Button Command="{Binding CloseWindowCommand}" Margin="150 10 100 25" Grid.Row="7"  Background="LightGreen" >Выход</Button>
+        <Button Command="{Binding RegisterCommand}" Margin="110 10 140 25" Grid.Row="7" Grid.Column="1" Background="LightGreen" >Сохранить данные </Button>
+    </Grid>
+</Window>

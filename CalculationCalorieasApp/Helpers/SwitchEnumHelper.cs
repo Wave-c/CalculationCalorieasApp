@@ -1,4 +1,5 @@
-﻿using CalculationCalorieasApp.ViewModels;
+﻿using CalculationCalorieasApp.Medels.Enums;
+using CalculationCalorieasApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

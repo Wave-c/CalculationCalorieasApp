@@ -18,6 +18,7 @@ using CalculationCalorieasApp.Views;
 using CalculationCalorieasApp.ViewModels.Base;
 using CalculationCalorieasApp.Views.Interfaces;
 using Messager.Helpers;
+using CalculationCalorieasApp.Medels.Enums;
 
 namespace CalculationCalorieasApp.ViewModels
 {
@@ -186,36 +187,5 @@ namespace CalculationCalorieasApp.ViewModels
             ((RegWindow)_window).Close();
         }
 
-    }
-    public enum Goal
-    {
-        [Description("Увеличение веса")]
-        Increase,
-        [Description("Уменьшение веса")]
-        Decrease,
-        [Description("Сохранение веса")]
-        Save
-    }
-    public enum Gender
-    {
-        [Description("Мужчина")]
-        Man,
-        [Description("Женщина")]
-        Woman,
-        [Description("Пол не указан")]
-        No
-    }
-    public enum Activ
-    {
-        [Description("Низкая активность, полное отсутствие спорта")]
-        First,
-        [Description("Малоподвижный образ жизни, физ. активность 1-2 раза в неделю")]
-        Second,
-        [Description("Средняя активность, физ. активность 2-4 раза в неделю")]
-        Third,
-        [Description("Активный образ жизни, подвижная работа, активность 5 раз в неделю")]
-        Fourth,
-        [Description("Высокая активность, подвижная работа, ежедневные тренировки")]
-        Fifth
     }
 }

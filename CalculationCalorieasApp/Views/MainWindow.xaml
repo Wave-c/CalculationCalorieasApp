@@ -51,9 +51,9 @@
         <Grid Grid.Column="1" Grid.RowSpan="1">
 
             <Label Content="Ваша норма ккал"  Height="40" Width="120" Margin="10,24,195,203"></Label>
-            <TextBlock Text="{Binding CaloriesAllowance}" FontSize="15" Height="40" Width="120" Margin="135,64,70,163" Background="AliceBlue"></TextBlock>
+            <TextBlock Text="{Binding SumCaloriesPerDay}" FontSize="15" Height="40" Width="120" Margin="135,64,70,163" Background="AliceBlue"></TextBlock>
             <Label Content="Всего  за день"  Height="40" Width="120" Margin="10,64,195,163"></Label>
-            <TextBlock Text="{Binding SumCaloriePerDay}" FontSize="15" Height="40" Width="120" Margin="135,24,70,203" Background="AliceBlue"></TextBlock>
+            <TextBlock Text="{Binding CalorieAllowance}" FontSize="15" Height="40" Width="120" Margin="135,24,70,203" Background="AliceBlue"></TextBlock>
 
             <Label Content="Завтрак" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="109,109,0,0"/>
             <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding BreakfastProducts}" Height="50" Width="200"  Margin="55,151,70,66"></ListBox>

@@ -14,15 +14,19 @@ using System.Windows;
 using Prism.Mvvm;
 using CalculationCalorieasApp.Helpers;
 using CalculationCalorieasApp.Medels;
+using CalculationCalorieasApp.Medels.Enums;
+using CalculationCalorieasApp.Views;
 
 namespace CalculationCalorieasApp.ViewModels
 {
     public class CaloriesPerDayWindowViewModel:BindableBase
     {
-        User User { get; set; }
-        public CaloriesPerDayWindowViewModel(User user)
+        private User _user;
+        private CaloriesPerDayWindow _window;
+        public CaloriesPerDayWindowViewModel(User user, CaloriesPerDayWindow window)
         {
-            User = user;
+            _window = window;
+            _user = user;
         }
         private Goal _selectedGoal;
         public Goal SelectedGoal
@@ -33,6 +37,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _selectedGoal = value;
                 RaisePropertyChanged();
                 ResultCommand.RaiseCanExecuteChanged();
+                RegisterCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -45,6 +50,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _selectedGender = value;
                 RaisePropertyChanged();
                 ResultCommand.RaiseCanExecuteChanged();
+                RegisterCommand.RaiseCanExecuteChanged();
             }
         }
         private Activ _selectedActiv;
@@ -56,6 +62,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _selectedActiv = value;
                 RaisePropertyChanged();
                 ResultCommand.RaiseCanExecuteChanged();
+                RegisterCommand.RaiseCanExecuteChanged();
             }
         }
         private string _weight;
@@ -67,6 +74,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _weight = value;
                 RaisePropertyChanged();
                 ResultCommand.RaiseCanExecuteChanged();
+                RegisterCommand.RaiseCanExecuteChanged();
             }
         }
         private string _height;
@@ -78,6 +86,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _height = value;
                 RaisePropertyChanged();
                 ResultCommand.RaiseCanExecuteChanged();
+                RegisterCommand.RaiseCanExecuteChanged();
             }
         }
         private string _age;
@@ -89,6 +98,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _age = value;
                 RaisePropertyChanged();
                 ResultCommand.RaiseCanExecuteChanged();
+                RegisterCommand.RaiseCanExecuteChanged();
             }
         }
         private string _result;
@@ -100,11 +110,48 @@ namespace CalculationCalorieasApp.ViewModels
                 _result = value;
                 RaisePropertyChanged();
                 ResultCommand.RaiseCanExecuteChanged();
+                RegisterCommand.RaiseCanExecuteChanged();
             }
         }
+
         private DelegateCommand _resultCommand;
         public DelegateCommand ResultCommand =>
                     _resultCommand ??= new DelegateCommand(ResultCommand_Execute, ResultCommand_CanExecute);
+
+        private DelegateCommand _closeWindowCommand;
+        public DelegateCommand CloseWindowCommand => _closeWindowCommand ??= new DelegateCommand(CloseWindowCommand_Execute);
+
+        private DelegateCommand _registerCommand;
+        public DelegateCommand RegisterCommand => _registerCommand ??= new DelegateCommand(RegisterCommand_Execute, SaveCommand_CanExecute);
+
+        private async void RegisterCommand_Execute()
+        {
+            using(var dbContext = new AppDBContext())
+            {
+                var addedUser = await dbContext.Users.Where(x => x.Id == _user.Id).FirstAsync();
+                addedUser.Goal = SelectedGoal;
+                addedUser.Gender = SelectedGender;
+                addedUser.Activ = SelectedActiv;
+                addedUser.Weight = int.Parse(Weight);
+                addedUser.Height = int.Parse(Height);
+                addedUser.Age = int.Parse(Age);
+                addedUser.CalPerDay = int.Parse(Result);
+                await dbContext.SaveChangesAsync();
+            }
+            _window.DialogResult = true;
+            _window.Close();
+        }
+
+        private async void CloseWindowCommand_Execute()
+        {
+            using (var dbContext = new AppDBContext())
+            {
+                dbContext.Remove(_user);
+                await dbContext.SaveChangesAsync();
+            }
+            _window.DialogResult = false;
+            _window.Close();
+        }
 
         public void ResultCommand_Execute()
         {
@@ -134,26 +181,7 @@ namespace CalculationCalorieasApp.ViewModels
                 !string.IsNullOrWhiteSpace(Height) &&
             !string.IsNullOrWhiteSpace(Age);
         }
-        private DelegateCommand _saveCommand;
-        public DelegateCommand SaveCommand =>
-                    _saveCommand ??= new DelegateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
 
-        public async void SaveCommand_Execute()
-        {
-            User.Activ = SelectedActiv;
-            User.Gender = SelectedGender;
-            User.Goal = SelectedGoal;
-            User.Weight = Convert.ToInt32(Weight);
-            User.Height= Convert.ToInt32(Height);
-            User.Age= Convert.ToInt32(Age);
-            User.CalPerDay = Convert.ToInt32(Result);
-
-            using (var dbContext = new AppDBContext())
-            {
-                await dbContext.Users.AddAsync(User);
-                await dbContext.SaveChangesAsync();
-            }
-        }
         public bool SaveCommand_CanExecute()
         {
             return !string.IsNullOrWhiteSpace(Weight) &&
@@ -161,36 +189,5 @@ namespace CalculationCalorieasApp.ViewModels
             !string.IsNullOrWhiteSpace(Age);
         }
 
-    }
-    public enum Goal
-    {
-        [Description("Увеличение веса")]
-        Increase,
-        [Description("Уменьшение веса")]
-        Decrease,
-        [Description("Сохранение веса")]
-        Save
-    }
-    public enum Gender
-    {
-        [Description("Мужчина")]
-        Man,
-        [Description("Женщина")]
-        Woman,
-        [Description("Пол не указан")]
-        No
-    }
-    public enum Activ
-    {
-        [Description("Низкая активность, полное отсутствие спорта")]
-        First,
-        [Description("Малоподвижный образ жизни, физ. активность 1-2 раза в неделю")]
-        Second,
-        [Description("Средняя активность, физ. активность 2-4 раза в неделю")]
-        Third,
-        [Description("Активный образ жизни, подвижная работа, активность 5 раз в неделю")]
-        Fourth,
-        [Description("Высокая активность, подвижная работа, ежедневные тренировки")]
-        Fifth
     }
 }
