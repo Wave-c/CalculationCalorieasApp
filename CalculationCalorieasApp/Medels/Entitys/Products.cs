@@ -24,7 +24,7 @@ namespace CalculationCalorieasApp.Medels.Entitys
 
         public override string ToString()
         {
-            return $"{Name} - {Calories}kcal";
+            return $"{Id}-{Name} - {Calories}ккал";
         }
     }
 }
