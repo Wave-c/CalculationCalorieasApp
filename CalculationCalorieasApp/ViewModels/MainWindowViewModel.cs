@@ -127,8 +127,5 @@ namespace CalculationCalorieasApp.ViewModels
         {
             return Eating != Eating.NA && SelectedProduct != null;
         }
-
-
-       
     }
 }
