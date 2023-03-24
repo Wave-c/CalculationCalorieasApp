@@ -7,7 +7,7 @@
                 xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         xmlns:system="clr-namespace:System;assembly=mscorlib" 
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
-         d:DataContext="{d:DesignInstance Type=viewModels:RegWindowViewModel}"
+         d:DataContext="{d:DesignInstance Type=viewModels:PersonalAccountWindowViewModel}"
         mc:Ignorable="d"
         Title="PersonalAccountWindow" Height="810" Width="850">
     <Window.Resources>
@@ -62,9 +62,13 @@
             <Separator></Separator>
             <Label Content="Логин" Foreground="Black"/>
             <TextBox Text="{Binding UserName}" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
-            <Label Content="Password" Foreground="Black"/>
-            
-            
+            <Label Content="Текущий пароль" Foreground="Black"/>
+            <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" x:Name="_passwordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
+            <Label Content="Новый пароль" Foreground="Black"/>
+            <PasswordBox PasswordChanged="NewPasswordBox_PasswordChanged" x:Name="_newPasswordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
+            <Button Command="{Binding SaveLoginAndPasswordCommand}">
+                Сохранить
+            </Button>
         </StackPanel>
         <Border Grid.RowSpan="2" Grid.Column="2" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
         <StackPanel Margin="20" Grid.RowSpan="2" Grid.Column="1">
@@ -95,6 +99,7 @@
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"></ComboBox>
             <Button Margin="110 10 140 25"  Background="LightGreen" Command="{Binding SaveCommand}">Сохранить</Button>
+       
         </StackPanel>
     </Grid>
     

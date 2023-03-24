@@ -20,9 +20,7 @@ namespace CalculationCalorieasApp.ViewModels
         User User { get; set; }
         public PersonalAccountWindowViewModel(ILoginOrRegisterWindow window, User user) : base(window)
         {
-            User= user;
-            using (var dbContext = new AppDBContext())
-            {
+            User= user;          
                 UserName=User.UserName;
                 SelectedGender=User.Gender;
                 SelectedGoal=User.Goal;
@@ -30,21 +28,14 @@ namespace CalculationCalorieasApp.ViewModels
                 Weight = User.Weight.ToString();
                 Height = User.Height.ToString();
                 Age = User.Age.ToString();
-            }
         }
         private DelegateCommand _saveCommand;
-        public DelegateCommand SaveCommand => _saveCommand ??= new DelegateCommand(SaveCommand_Execute);
+        public DelegateCommand SaveCommand => _saveCommand ??= new DelegateCommand(SaveCommand_Execute, SaveCommand_CanExecute);
 
         private async void SaveCommand_Execute()
         {
             using (var dbContext = new AppDBContext())
             {
-                var currentUser = dbContext.Users.Where(x => x.UserName == UserName).FirstOrDefault();
-                if (currentUser != null)
-                {
-                    MessageBox.Show("Такой пользователь уже существует, выберите другое имя", "Ошибка", MessageBoxButton.OK);
-                    return;
-                }
                 int i = 0;
                 if (SelectedGender == Gender.Man)
                     i = 5;
@@ -63,13 +54,6 @@ namespace CalculationCalorieasApp.ViewModels
 
                 }
                 Result = ((int)result).ToString();
-                //var addedUser = new User()
-                //{
-                //Id = Guid.NewGuid(),
-                User.UserName = UserName;
-                //Password = Encryptor.GenerateHash(Password),
-                //User.Status = StatusUser.USER,
-                //Image = new byte[0],
                 User.Gender = SelectedGender;
                 User.Goal = SelectedGoal;
                 User.Activ = SelectedActiv;
@@ -78,14 +62,54 @@ namespace CalculationCalorieasApp.ViewModels
                 User.Age = Convert.ToInt32(Age);
                 User.CalPerDay = Convert.ToInt32(Result);
 
-                //};
-                dbContext.Entry(User).State=EntityState.Modified;
+                dbContext.Entry(User).State = EntityState.Modified;
                 await dbContext.SaveChangesAsync();
-
-                //base.EnterToAppCommand_Execute();
+                base.CloseWindow();
 
             }
 
+        }
+        private bool SaveCommand_CanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(Weight) &&
+                !string.IsNullOrWhiteSpace(Height) &&
+            !string.IsNullOrWhiteSpace(Age);
+        }
+
+        protected override async void SaveLoginAndPasswordCommand_Execute()
+        {
+            using (var dbContext = new AppDBContext())
+            {
+                if (User.UserName != UserName)
+                {
+                    var currentUser = dbContext.Users.Where(x => x.UserName == UserName).FirstOrDefault();
+                    if (currentUser != null)
+                    {
+                        MessageBox.Show("Такой пользователь уже существует, выберите другое имя", "Ошибка", MessageBoxButton.OK);
+                        return;
+                    }
+                }
+                if (User.Password!= Encryptor.GenerateHash(Password))
+                {
+                    MessageBox.Show("Неверный пароль, введите еще раз", "Ошибка", MessageBoxButton.OK);
+                    return;
+                }
+                User.UserName = UserName;
+                User.Password = Encryptor.GenerateHash(NewPassword);
+                NewPassword=String.Empty;
+                dbContext.Entry( User).State = EntityState.Modified;
+                await dbContext.SaveChangesAsync();
+                base.CloseWindow();
+
+            }
+            base.SaveLoginAndPasswordCommand_Execute();
+
+        }
+        protected override bool SaveLoginAndPasswordCommand_CanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(UserName) &&
+            !string.IsNullOrWhiteSpace(Password) &&
+            !string.IsNullOrWhiteSpace(NewPassword);
         }
 
     }
