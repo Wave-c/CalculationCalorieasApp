@@ -79,5 +79,10 @@ namespace CalculationCalorieasApp.ViewModels
             loginWindow.Show();
             ((LoginRegWindow)_window).Close();
         }
+
+        protected override bool SaveLoginAndPasswordCommand_CanExecute()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
