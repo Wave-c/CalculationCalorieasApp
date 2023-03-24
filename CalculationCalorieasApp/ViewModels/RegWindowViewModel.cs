@@ -24,6 +24,7 @@ namespace CalculationCalorieasApp.ViewModels
     public class RegWindowViewModel : LoginAndRegisterViewModelBase
     {
         private string _passwordConfirmation;
+        User User { get; set; }
         public RegWindowViewModel(ILoginOrRegisterWindow window) : base(window)
         {        
         }
@@ -36,6 +37,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _selectedGoal = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -48,6 +50,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _selectedGender = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
         private Activ _selectedActiv;
@@ -59,6 +62,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _selectedActiv = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
         private string _weight;
@@ -70,6 +74,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _weight = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
         private string _height;
@@ -81,6 +86,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _height = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
         private string _age;
@@ -92,6 +98,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _age = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
         private string _result;
@@ -103,6 +110,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _result = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
         public string PasswordConfirmation
@@ -113,6 +121,7 @@ namespace CalculationCalorieasApp.ViewModels
                 _passwordConfirmation = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
         private DelegateCommand _openLoginWindowCommand;
@@ -146,29 +155,82 @@ namespace CalculationCalorieasApp.ViewModels
 
                 }
                 Result = ((int)result).ToString();
-                var addedUser = new User()
-                {
-                    Id = Guid.NewGuid(),
-                    UserName = UserName,
-                    Password = Encryptor.GenerateHash(Password),
-                    Status = StatusUser.USER,
-                    Image = new byte[0],
-                    Gender = SelectedGender,
-                    Goal = SelectedGoal,
-                    Activ = SelectedActiv,
-                    Weight = Convert.ToInt32(Weight),
-                    Height = Convert.ToInt32(Height),
-                    Age = Convert.ToInt32(Age),
-                    CalPerDay = Convert.ToInt32(Result)
 
-                };
-                    await dbContext.Users.AddAsync(addedUser);
+                User.Id = Guid.NewGuid();
+                User.UserName = UserName;
+                User.Password = Encryptor.GenerateHash(Password);
+                User.Status = StatusUser.USER;
+                User.Image = new byte[0];
+                User.Gender = SelectedGender;
+                User.Goal = SelectedGoal;
+                User.Activ = SelectedActiv;
+                User.Weight = Convert.ToInt32(Weight);
+                User.Height = Convert.ToInt32(Height);
+                User.Age = Convert.ToInt32(Age);
+                User.CalPerDay = Convert.ToInt32(Result);
+
+                    await dbContext.Users.AddAsync(User);
                     await dbContext.SaveChangesAsync();
 
                 base.EnterToAppCommand_Execute();
 
             }
             
+        }
+        private DelegateCommand _saveCommand;
+        public DelegateCommand SaveCommand => _saveCommand ??= new DelegateCommand(SaveCommand_Execute, EnterToAppCommand_CanExecute);
+
+        private async void SaveCommand_Execute()
+        {
+            using (var dbContext = new AppDBContext())
+            {
+                var currentUser = dbContext.Users.Where(x => x.UserName == UserName).FirstOrDefault();
+                if (currentUser != null)
+                {
+                    MessageBox.Show("Такой пользователь уже существует, выберите другое имя", "Ошибка", MessageBoxButton.OK);
+                    return;
+                }
+                int i = 0;
+                if (SelectedGender == Gender.Man)
+                    i = 5;
+                else i = -161;
+                double result = ((9.99 * Convert.ToInt32(Weight)) + (6.25 * Convert.ToInt32(Height)) - (4.92 * Convert.ToInt32(Age)) + (i)) * SwitchEnumHelper.EnumConverter(SelectedActiv);
+                switch (SelectedGoal)
+                {
+                    case Goal.Increase:
+                        result += (result / 100 * 20);
+                        break;
+                    case Goal.Decrease:
+                        result -= (result / 100 * 20);
+                        break;
+                    case Goal.Save:
+                        break;
+
+                }
+                Result = ((int)result).ToString();
+                //var addedUser = new User()
+                //{
+                //Id = Guid.NewGuid(),
+                User.UserName = UserName;
+                //Password = Encryptor.GenerateHash(Password),
+                //User.Status = StatusUser.USER,
+                //Image = new byte[0],
+                User.Gender = SelectedGender;
+                User.Goal = SelectedGoal;
+                User.Activ = SelectedActiv;
+                User.Weight = Convert.ToInt32(Weight);
+                User.Height = Convert.ToInt32(Height);
+                User.Age = Convert.ToInt32(Age);
+                User.CalPerDay = Convert.ToInt32(Result);
+
+                //};
+                dbContext.Entry(User).State = EntityState.Modified;
+                await dbContext.SaveChangesAsync();
+
+                //base.EnterToAppCommand_Execute();
+
+            }
+
         }
         protected override bool EnterToAppCommand_CanExecute()
         {
@@ -201,9 +263,7 @@ namespace CalculationCalorieasApp.ViewModels
         [Description("Мужчина")]
         Man,
         [Description("Женщина")]
-        Woman,
-        [Description("Пол не указан")]
-        No
+        Woman
     }
     public enum Activ
     {

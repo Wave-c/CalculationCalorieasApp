@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Windows;
+using CalculationCalorieasApp.Views;
 
 namespace CalculationCalorieasApp.ViewModels
 {
@@ -109,6 +111,14 @@ namespace CalculationCalorieasApp.ViewModels
         private bool AddProductCommand_CanExecute()
         {
             return Eating != Eating.NA && SelectedProduct != null;
+        }
+        private DelegateCommand _openPersonalAccountCommand;
+        public DelegateCommand OpenPersonalAccountCommand => _openPersonalAccountCommand ??= new DelegateCommand(OpenPersonalAccountCommand_Execute);
+
+        private void OpenPersonalAccountCommand_Execute()
+        {
+            var personalAccountWindow = new PersonalAccountWindow(_currentUser);
+            personalAccountWindow.Show();
         }
     }
 }
