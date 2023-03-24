@@ -7,7 +7,9 @@ using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using System.Windows;
+using CalculationCalorieasApp.Views;
 
 
 namespace CalculationCalorieasApp.ViewModels
@@ -208,13 +210,13 @@ namespace CalculationCalorieasApp.ViewModels
         {
             return Eating != Eating.NA && SelectedProduct != null;
         }
+        private DelegateCommand _openPersonalAccountCommand;
+        public DelegateCommand OpenPersonalAccountCommand => _openPersonalAccountCommand ??= new DelegateCommand(OpenPersonalAccountCommand_Execute);
 
-        public async Task UpdateProducts()
+        private void OpenPersonalAccountCommand_Execute()
         {
-            using (var dbContext = new AppDBContext())
-            {
-                Products = await dbContext.Products.ToListAsync();
-            }
+            var personalAccountWindow = new PersonalAccountWindow(_currentUser);
+            personalAccountWindow.Show();
         }
     }
 }
