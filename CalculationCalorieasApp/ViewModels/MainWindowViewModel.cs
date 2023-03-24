@@ -23,6 +23,9 @@ namespace CalculationCalorieasApp.ViewModels
         private List<Product> _supperProducts = new List<Product>();
         private Product _selectedProduct;
         private Eating _eating;
+        private int _breakfastCcal;
+        private int _dinnerCcal;
+        private int _supperCcal;
 
         public MainWindowViewModel(User currentUser)
         {
@@ -109,6 +112,33 @@ namespace CalculationCalorieasApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+        public int BreakfastCcal
+        {
+            get => _breakfastCcal;
+            set
+            {
+                _breakfastCcal = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int DinnerCcal
+        {
+            get => _dinnerCcal;
+            set
+            {
+                _dinnerCcal = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int SupperCcal
+        {
+            get => _supperCcal;
+            set
+            {
+                _supperCcal = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public bool HasUserAdminOptions { get; set; }
 
@@ -120,12 +150,32 @@ namespace CalculationCalorieasApp.ViewModels
 
         private void RemoveProductCommand_Execute()
         {
-            BreakfastProducts.ToList().Remove(SelectedProduct);
-            BreakfastProducts = BreakfastProducts;
-            DinnerProducts.ToList().Remove(SelectedProduct);
-            DinnerProducts = DinnerProducts;
-            SupperProducts.ToList().Remove(SelectedProduct);
-            SupperProducts = SupperProducts;
+            var breakfastProduct = BreakfastProducts.ToList();
+            var dinnerProduct = DinnerProducts.ToList();
+            var supperProduct = SupperProducts.ToList();
+
+            if (breakfastProduct.Contains(SelectedProduct))
+            {
+                breakfastProduct.Remove(SelectedProduct);
+                SumCaloriesPerDay -= SelectedProduct.Calories;
+                BreakfastCcal -= SelectedProduct.Calories;
+                BreakfastProducts = breakfastProduct;
+            }
+            else if (dinnerProduct.Contains(SelectedProduct))
+            {
+                dinnerProduct.Remove(SelectedProduct);
+                SumCaloriesPerDay -= SelectedProduct.Calories;
+                DinnerCcal -= SelectedProduct.Calories;
+                DinnerProducts = dinnerProduct;
+            }
+            else if (supperProduct.Contains(SelectedProduct))
+            {
+                supperProduct.Remove(SelectedProduct);
+                SumCaloriesPerDay -= SelectedProduct.Calories;
+                SupperCcal -= SelectedProduct.Calories;
+                SupperProducts = supperProduct;
+            }
+            SelectedProduct = null;
         }
         private bool RemoveProductCommand_CanExecute()
         {
@@ -137,12 +187,15 @@ namespace CalculationCalorieasApp.ViewModels
             switch(Eating)
             {
                 case Eating.BREAKFAST:
+                    BreakfastCcal += SelectedProduct.Calories;
                     BreakfastProducts = BreakfastProducts.Append(SelectedProduct).ToList();
                     break;
                 case Eating.DINNER:
+                    DinnerCcal += SelectedProduct.Calories;
                     DinnerProducts = DinnerProducts.Append(SelectedProduct).ToList();
                     break;
                 case Eating.SUPPER:
+                    SupperCcal += SelectedProduct.Calories;
                     SupperProducts = SupperProducts.Append(SelectedProduct).ToList();
                     break;
                 case Eating.NA:

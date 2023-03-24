@@ -56,16 +56,16 @@
             <TextBlock Text="{Binding CalorieAllowance}" FontSize="15" Height="40" Width="120" Margin="135,24,70,203" Background="AliceBlue"></TextBlock>
 
             <Label Content="Завтрак" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="109,109,0,0"/>
-            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding BreakfastProducts}" Height="50" Width="200"  Margin="55,151,70,66"></ListBox>
+            <ListBox SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding BreakfastProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200"  Margin="55,151,70,66"></ListBox>
             <Label Content="{Binding BreakfastCcal}" Height="30" Width="60" Margin="308,170,24,84" > </Label>
             <Label Content="Обед" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="113,222,0,0" />
-            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding DinnerProducts}" Height="50" Width="200"  Margin="55,264,70,-47" ></ListBox>
+            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding DinnerProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200"  Margin="55,264,70,-47" ></ListBox>
             <Label Content="{Binding DinnerCcal}" Height="30" Width="60" RenderTransformOrigin="0.517,0.536" Margin="308,283,24,-29"></Label>
             <Label Content="Ужин" Height="35" Width="86" FontSize="20" Foreground="Black" Margin="113,346,126,-114"></Label>
-            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding SupperProducts}" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
+            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding SupperProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
             <Label Content="{Binding SupperCcal}" Height="30" Width="60" Margin="308,405,24,-151" ></Label>
 
-            <Button Command="{Binding }" Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
+            <Button Command="{Binding RemoveProductCommand}" Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
             <Button Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
