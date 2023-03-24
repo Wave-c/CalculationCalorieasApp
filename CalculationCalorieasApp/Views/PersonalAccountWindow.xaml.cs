@@ -40,6 +40,14 @@ namespace CalculationCalorieasApp.Views
                .Select(s => s.GetDescription());
             DataContext = new PersonalAccountWindowViewModel(this,currentUser);
         }
-
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ((PersonalAccountWindowViewModel)DataContext).Password = _passwordBox.Password;
+        }
+        private void NewPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ((PersonalAccountWindowViewModel)DataContext).NewPassword = _passwordBox.Password;
+        }
     }
+
 }

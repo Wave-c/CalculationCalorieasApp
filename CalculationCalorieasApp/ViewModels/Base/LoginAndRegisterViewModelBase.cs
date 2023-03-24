@@ -33,6 +33,7 @@ namespace CalculationCalorieasApp.ViewModels.Base
                 _userName = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveLoginAndPasswordCommand.RaiseCanExecuteChanged();
             }
         }
         public string Password
@@ -43,9 +44,20 @@ namespace CalculationCalorieasApp.ViewModels.Base
                 _password = value;
                 RaisePropertyChanged();
                 EnterToAppCommand.RaiseCanExecuteChanged();
+                SaveLoginAndPasswordCommand.RaiseCanExecuteChanged();
             }
         }
-
+        private string _newPassword;
+        public string NewPassword
+        {
+            get => _newPassword;
+            set
+            {
+                _newPassword = value;
+                RaisePropertyChanged();
+                SaveLoginAndPasswordCommand.RaiseCanExecuteChanged();
+            }
+        }
         protected DelegateCommand _enterToAppCommand;
         public DelegateCommand EnterToAppCommand => _enterToAppCommand ??= new DelegateCommand(EnterToAppCommand_Execute, EnterToAppCommand_CanExecute);
 
@@ -64,6 +76,19 @@ namespace CalculationCalorieasApp.ViewModels.Base
                 var mainWindow = new MainWindow(currentUser);
                 mainWindow.Show();
             }
+            ((Window)_window).Close();
+        }
+
+        protected DelegateCommand _saveLoginAndPasswordCommand;
+        public DelegateCommand SaveLoginAndPasswordCommand => _saveLoginAndPasswordCommand ??= new DelegateCommand(SaveLoginAndPasswordCommand_Execute, SaveLoginAndPasswordCommand_CanExecute);
+
+        protected abstract bool SaveLoginAndPasswordCommand_CanExecute();
+        protected virtual void SaveLoginAndPasswordCommand_Execute()
+        {            
+            ((Window)_window).Close();
+        }
+        public void CloseWindow()
+        {
             ((Window)_window).Close();
         }
     }
