@@ -1,0 +1,49 @@
+﻿<Window x:Class="CalculationCalorieasApp.Views.LoginRegWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
+        xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
+        mc:Ignorable="d"
+       Title="РЕГИСТРАЦИЯ НОВОГО ПОЛЬЗОВАТЕЛЯ" Height="450" Width="350"
+        d:DataContext="{d:DesignInstance Type=viewModels:LoginRegWindowViewModel}">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border Background="LightBlue"  CornerRadius="60" Margin=" 20">
+            <StackPanel Margin="20">
+                <Label Content="РЕГИСТРАЦИЯ" Foreground="Black"  FontSize="25" HorizontalAlignment="Center"/>
+                <Separator></Separator>
+                <Label Content="Логин" Foreground="Black"/>
+                <TextBox Text="{Binding UserName}" Background="#545d6a" Foreground="Black"  FontSize="18"/>
+                <Label Content="Password" Foreground="Black"/>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" x:Name="_passwordBox" Background="#545d6a" Foreground="Black"  FontSize="18"/>
+                <Label Content="Email" Foreground="Black"/>
+                <TextBox Text="{Binding Email}" Background="#545d6a" Foreground="Black"  FontSize="18"/>
+                <DockPanel>
+                    <Button Content="Зарегистрироваться" Margin="0 20 0 0" HorizontalAlignment="Center" Background="Firebrick"
+                    Foreground="White"  FontSize="17" Height="30" Width="180"
+                    Command="{Binding EnterToAppCommand}"/>
+                </DockPanel>
+                <Label Content="Уже зарегистрированы?"/>
+                <Button Command="{Binding OpenLoginWindowCommand}" Content="Войти" Height="20" Width="50" Background="Firebrick"
+                    Foreground="White"  FontSize="12" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

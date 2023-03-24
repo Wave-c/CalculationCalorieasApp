@@ -18,6 +18,7 @@ using CalculationCalorieasApp.Views;
 using CalculationCalorieasApp.ViewModels.Base;
 using CalculationCalorieasApp.Views.Interfaces;
 using Messager.Helpers;
+using CalculationCalorieasApp.Medels.Enums;
 
 namespace CalculationCalorieasApp.ViewModels
 {

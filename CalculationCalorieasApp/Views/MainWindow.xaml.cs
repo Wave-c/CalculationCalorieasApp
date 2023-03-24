@@ -2,6 +2,7 @@
 using CalculationCalorieasApp.Medels;
 using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,5 +48,10 @@ namespace CalculationCalorieasApp.Views
             ((MainWindowViewModel)DataContext).Eating = Medels.Enums.Eating.SUPPER;
         }
 
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _adminPanel.DataContext = new AdminPanelUCViewModel(((MainWindowViewModel)DataContext));
+            await ((MainWindowViewModel)DataContext).UpdateProducts();
+        }
     }
 }

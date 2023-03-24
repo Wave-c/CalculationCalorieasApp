@@ -1,13 +1,15 @@
 ﻿<Window x:Class="CalculationCalorieasApp.Views.MainWindow"
+        Loaded="Window_Loaded"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculationCalorieasApp"
+        xmlns:views="clr-namespace:CalculationCalorieasApp.Views"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
         mc:Ignorable="d"
-        Title="Рассчет килокаллорий" Height="710" Width="800"
+        Title="Рассчет килокаллорий" Height="784" Width="784"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
@@ -35,7 +37,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
 
         <Border Grid.ColumnSpan="2" Grid.RowSpan="2" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
@@ -57,21 +59,21 @@
             <TextBlock Text="{Binding CalorieAllowance}" FontSize="15" Height="40" Width="120" Margin="135,24,70,203" Background="AliceBlue"></TextBlock>
 
             <Label Content="Завтрак" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="109,109,0,0"/>
-            <ListBox ItemsSource="{Binding BreakfastProducts}" Height="50" Width="200"  Margin="55,151,70,66"></ListBox>
+            <ListBox SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding BreakfastProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200"  Margin="55,151,70,66"></ListBox>
+            <Label Content="{Binding BreakfastCcal}" Height="30" Width="60" Margin="308,170,24,84" > </Label>
             <Label Content="Обед" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="113,222,0,0" />
-            <ListBox ItemsSource="{Binding DinnerProducts}" Height="50" Width="200"  Margin="55,264,70,-47" ></ListBox>
+            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding DinnerProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200"  Margin="55,264,70,-47" ></ListBox>
+            <Label Content="{Binding DinnerCcal}" Height="30" Width="60" RenderTransformOrigin="0.517,0.536" Margin="308,283,24,-29"></Label>
             <Label Content="Ужин" Height="35" Width="86" FontSize="20" Foreground="Black" Margin="113,346,126,-114"></Label>
-            <ListBox ItemsSource="{Binding SupperProducts}" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
+            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding SupperProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
+            <Label Content="{Binding SupperCcal}" Height="30" Width="60" Margin="308,405,24,-151" ></Label>
 
-            <Button Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
+            <Button Command="{Binding RemoveProductCommand}" Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
             <Button Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
          Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BoolToVisConverter}}">
-            <Button Command="{Binding AddProductCommand}" Content="Добавить" Grid.Column="0" Height="30" Width="80" Margin="72,10,498,60" Background="ForestGreen" />
-            <Button Content="Изменить" Grid.Row="2" Grid.ColumnSpan="2" Height="30" Width="80" Margin="160,10,160,60" Background="ForestGreen" />
-            <Button Command="{Binding DeleteProductCommand}" Content="Удалить" Height="30" Width="80" Margin="494,10,76,60" Background="ForestGreen"/>
-            <Button Content="Сохранить" Grid.Row="2" Grid.ColumnSpan="2" Height="40" Width="100" Margin="150,50,150,10" Background="ForestGreen" />
+            <views:AdminPanelUC x:Name="_adminPanel"/>
         </Grid>
 
     </Grid>

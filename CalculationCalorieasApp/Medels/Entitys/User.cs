@@ -1,4 +1,5 @@
-﻿using CalculationCalorieasApp.ViewModels;
+﻿using CalculationCalorieasApp.Medels.Enums;
+using CalculationCalorieasApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace CalculationCalorieasApp.Medels.Entitys
         public int Weight { get; set; }
         public int Height { get; set; }
         public int Age { get; set; }    
-
+        public string Email { get; set; }
         public int CalPerDay { get; set; }
     }
 
