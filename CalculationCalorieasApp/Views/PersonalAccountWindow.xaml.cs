@@ -1,4 +1,5 @@
 ﻿using CalculationCalorieasApp.Medels.Entitys;
+using CalculationCalorieasApp.Medels.Enums;
 using CalculationCalorieasApp.Medels.Extensions;
 using CalculationCalorieasApp.ViewModels;
 using CalculationCalorieasApp.Views.Interfaces;

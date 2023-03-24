@@ -1,6 +1,7 @@
 ﻿using CalculationCalorieasApp.Helpers;
 using CalculationCalorieasApp.Medels;
 using CalculationCalorieasApp.Medels.Entitys;
+using CalculationCalorieasApp.Medels.Enums;
 using CalculationCalorieasApp.Views;
 using CalculationCalorieasApp.Views.Interfaces;
 using Messager.Helpers;
