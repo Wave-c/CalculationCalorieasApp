@@ -1,4 +1,5 @@
-﻿using CalculationCalorieasApp.Medels.Entitys;
+﻿using CalculationCalorieasApp.Helpers;
+using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.Medels.Enums;
 using CalculationCalorieasApp.Medels.Extensions;
 using CalculationCalorieasApp.ViewModels;
@@ -39,7 +40,7 @@ namespace CalculationCalorieasApp.Views
             _activComboBox.ItemsSource =
                (Enum.GetValues(typeof(Activ)) as Activ[])
                .Select(s => s.GetDescription());
-            DataContext = new PersonalAccountWindowViewModel(this,currentUser);
+            DataContext = new PersonalAccountWindowViewModel(this, currentUser);
         }
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -47,8 +48,14 @@ namespace CalculationCalorieasApp.Views
         }
         private void NewPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            ((PersonalAccountWindowViewModel)DataContext).NewPassword = _passwordBox.Password;
+            ((PersonalAccountWindowViewModel)DataContext).NewPassword = _newPasswordBox.Password;
         }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ((PersonalAccountWindowViewModel)DataContext).Image = await BitmapHelper.GetUserImageAsync(_currentUser);
+        }
+
     }
 
 }

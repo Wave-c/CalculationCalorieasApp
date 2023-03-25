@@ -2,6 +2,7 @@
 using CalculationCalorieasApp.Medels.Enums;
 using CalculationCalorieasApp.Medels.Extensions;
 using CalculationCalorieasApp.ViewModels;
+using CalculationCalorieasApp.Views.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace CalculationCalorieasApp.Views
     /// <summary>
     /// Логика взаимодействия для CaloriesPerDayWindow.xaml
     /// </summary>
-    public partial class CaloriesPerDayWindow : Window
+    public partial class CaloriesPerDayWindow : Window, ILoginOrRegisterWindow
     {
         public CaloriesPerDayWindow(User user)
         {
