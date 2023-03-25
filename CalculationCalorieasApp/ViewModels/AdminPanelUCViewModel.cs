@@ -75,6 +75,14 @@ namespace CalculationCalorieasApp.ViewModels
         private DelegateCommand _updateProductCommand;
         public DelegateCommand UpdateProductCommand => _updateProductCommand ??= new DelegateCommand(UpdateProductCommand_Execute, UpdateProductCommand_CanExecute);
 
+        private DelegateCommand _saveProductCommand;
+        public DelegateCommand SaveProductCommand => _saveProductCommand ??= new DelegateCommand(SaveProductCommand_Execute);
+
+        private void SaveProductCommand_Execute()
+        {
+
+        }
+
         private async void UpdateProductCommand_Execute()
         {
             using (var dbContext = new AppDBContext())
@@ -85,7 +93,7 @@ namespace CalculationCalorieasApp.ViewModels
                     updatedProduct.Name = UpdatedName;
                     updatedProduct.Calories = Calories;
                     await dbContext.SaveChangesAsync();
-                    await _parentViewModel.UpdateProducts();
+                    await _parentViewModel.UpdateProductsAsync();
                 }
                 Name = "";
                 UpdatedName = "";
@@ -106,7 +114,7 @@ namespace CalculationCalorieasApp.ViewModels
                 {
                     dbContext.Remove(removedProduct);
                     await dbContext.SaveChangesAsync();
-                    await _parentViewModel.UpdateProducts();
+                    await _parentViewModel.UpdateProductsAsync();
                 }
                 else
                 {
@@ -126,7 +134,7 @@ namespace CalculationCalorieasApp.ViewModels
             {
                 await dbContext.Products.AddAsync(new Product(Guid.NewGuid(), Name, Calories));
                 await dbContext.SaveChangesAsync();
-                await _parentViewModel.UpdateProducts();
+                await _parentViewModel.UpdateProductsAsync();
             }
             Name = "";
             Calories = 0;

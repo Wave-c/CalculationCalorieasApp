@@ -27,7 +27,7 @@ namespace CalculationCalorieasApp.ViewModels
     {
         private User _user;
         private ILoginOrRegisterWindow _window;
-        public  PersonalAccountWindowViewModel(ILoginOrRegisterWindow window, User user)
+        public PersonalAccountWindowViewModel(ILoginOrRegisterWindow window, User user)
         {
             _window = window;
             _user = user;
@@ -240,15 +240,6 @@ namespace CalculationCalorieasApp.ViewModels
         {
             Image = await BitmapHelper.SetUserImageAsync(_user);
         }
-
-        private bool RegisterCommand_CanExecute()
-        {
-            return true;
-        }
-
-        private bool ResultCommand_CanExecute()
-        {
-            return true;
-        }
     }
 }
+

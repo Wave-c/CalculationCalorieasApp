@@ -10,7 +10,6 @@ using CalculationCalorieasApp.Medels;
 using System.Linq;
 using System.Text;
 using Microsoft.Win32;
-using Microsoft.EntityFrameworkCore;
 
 namespace CalculationCalorieasApp.Helpers
 {
@@ -84,14 +83,14 @@ namespace CalculationCalorieasApp.Helpers
             if (result == true)
             {
                 string filename = dlg.FileName;
-                var image = new Bitmap(filename);
+                BitmapImage image = BitmapHelper.BitmapToBitmapImage(new Bitmap(filename));
 
                 ImageConverter converter = new ImageConverter();
-                byte[] bTemp = (byte[])converter.ConvertTo(image, typeof(byte[]));
-                using (var dbContext = new AppDBContext())
+                byte[] bTemp = (byte[])converter.ConvertTo(BitmapHelper.FromBitmapImagetoBitmap(image), typeof(byte[]));
+                
+                using(var dbContext = new AppDBContext())
                 {
-                    currentUser.Image = bTemp;
-                    dbContext.Entry(currentUser).State = EntityState.Modified;
+                    dbContext.Users.Where(x => x.Id == currentUser.Id).First().Image = bTemp;
                     await dbContext.SaveChangesAsync();
                 }
                 return await GetUserImageAsync(currentUser);

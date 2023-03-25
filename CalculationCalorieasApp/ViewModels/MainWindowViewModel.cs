@@ -1,6 +1,7 @@
 ﻿using CalculationCalorieasApp.Medels;
 using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.Medels.Enums;
+using CalculationCalorieasApp.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -10,18 +11,14 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using CalculationCalorieasApp.Views;
-
-
+using System;
 
 namespace CalculationCalorieasApp.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
         private User _currentUser;
-        private int _breakfastCcal;
-        private int _dinnerCcal;
-        private int _supperCcal;
-        private int _calorieAllowance;
+        private int _caloriesAllowance;
         private int _sumCaloriesPerDay;
         private IEnumerable<Product> _products = new List<Product>();
         private List<Product> _breakfastProducts = new List<Product>();
@@ -29,17 +26,17 @@ namespace CalculationCalorieasApp.ViewModels
         private List<Product> _supperProducts = new List<Product>();
         private Product _selectedProduct;
         private Eating _eating;
+        private BitmapImage _image;
         private int _breakfastCcal;
         private int _dinnerCcal;
         private int _supperCcal;
-
 
         public MainWindowViewModel(User currentUser)
         {
             _currentUser = currentUser;
             HasUserAdminOptions = currentUser.Status == StatusUser.ADMIN ? true : false;
             Eating = Eating.NA;
-            CalorieAllowance = currentUser.CalPerDay;
+            CaloriesAllowance = currentUser.CalPerDay;
             SumCaloriesPerDay = 0;
         }
 
@@ -52,35 +49,6 @@ namespace CalculationCalorieasApp.ViewModels
                 RaisePropertyChanged();
                 AddProductCommand.RaiseCanExecuteChanged();
             }
-        }
-
-        public int BreakfastCcal
-        {
-            get=> _breakfastCcal;
-            set
-            {
-                _breakfastCcal = value; 
-                RaisePropertyChanged();
-            }
-        }
-        public int DinnerCcal
-        {
-            get => _dinnerCcal;
-            set
-            {
-                _dinnerCcal = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public int SupperCcal
-        {
-            get => _supperCcal;
-            set
-            {
-                _supperCcal = value;
-                RaisePropertyChanged();
-            }   
         }
         public List<Product> SupperProducts
         {
@@ -139,12 +107,12 @@ namespace CalculationCalorieasApp.ViewModels
                 RaisePropertyChanged();
             }
         }
-        public int CalorieAllowance
+        public int CaloriesAllowance
         {
-            get => _calorieAllowance;
+            get => _caloriesAllowance;
             set
             {
-                _calorieAllowance = value;
+                _caloriesAllowance = value;
                 RaisePropertyChanged();
             }
         }
@@ -175,6 +143,16 @@ namespace CalculationCalorieasApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+        public BitmapImage Image
+        {
+            get => _image;
+            set
+            {
+                _image = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         public bool HasUserAdminOptions { get; set; }
 
@@ -183,6 +161,9 @@ namespace CalculationCalorieasApp.ViewModels
 
         private DelegateCommand _removeProductCommand;
         public DelegateCommand RemoveProductCommand => _removeProductCommand ??= new DelegateCommand(RemoveProductCommand_Execute, RemoveProductCommand_CanExecute);
+
+        private DelegateCommand _openPersonalAccountCommand;
+        public DelegateCommand OpenPersonalAccountCommand => _openPersonalAccountCommand ??= new DelegateCommand(OpenPersonalAccountCommand_Execute);
 
         private void RemoveProductCommand_Execute()
         {
@@ -220,8 +201,7 @@ namespace CalculationCalorieasApp.ViewModels
 
         private void AddProductCommand_Execute()
         {
-           
-            switch (Eating)
+            switch(Eating)
             {
                 case Eating.BREAKFAST:
                     BreakfastCcal += SelectedProduct.Calories;
@@ -245,16 +225,14 @@ namespace CalculationCalorieasApp.ViewModels
         {
             return Eating != Eating.NA && SelectedProduct != null;
         }
-        private DelegateCommand _openPersonalAccountCommand;
-        public DelegateCommand OpenPersonalAccountCommand => _openPersonalAccountCommand ??= new DelegateCommand(OpenPersonalAccountCommand_Execute);
 
-        private void OpenPersonalAccountCommand_Execute()
+        private async void OpenPersonalAccountCommand_Execute()
         {
             var personalAccountWindow = new PersonalAccountWindow(_currentUser, this);
             personalAccountWindow.Show();
         }
 
-        public async Task UpdateProducts()
+        public async Task UpdateProductsAsync()
         {
             using (var dbContext = new AppDBContext())
             {
@@ -262,11 +240,16 @@ namespace CalculationCalorieasApp.ViewModels
             }
         }
 
-        public async Task UpdateCalorieAllowance()
+        public async Task UpdateImageAsync()
+        {
+            Image = await BitmapHelper.GetUserImageAsync(_currentUser);
+        }
+
+        public async Task UpdateCaloriesAllowance()
         {
             using (var dbContext = new AppDBContext())
             {
-                CalorieAllowance = (await dbContext.Users.Where(x => x.Id == _currentUser.Id).FirstAsync()).CalPerDay;
+                CaloriesAllowance = (await dbContext.Users.Where(x => x.Id == _currentUser.Id).FirstAsync()).CalPerDay;
             }
         }
     }

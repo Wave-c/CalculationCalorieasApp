@@ -60,7 +60,8 @@ namespace CalculationCalorieasApp.Views
 
         private async void Window_Closed(object sender, EventArgs e)
         {
-            await _parentViewModel.UpdateCalorieAllowance();
+            await _parentViewModel.UpdateImageAsync();
+            await _parentViewModel.UpdateCaloriesAllowance();
         }
     }
 

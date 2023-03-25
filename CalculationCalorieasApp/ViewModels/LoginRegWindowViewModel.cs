@@ -58,7 +58,6 @@ namespace CalculationCalorieasApp.ViewModels
                 await dbContext.Users.AddAsync(addedUser);
                 await dbContext.SaveChangesAsync();
             }
-            
             base.EnterToAppCommand_Execute();
         }
         protected override bool EnterToAppCommand_CanExecute()

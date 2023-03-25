@@ -30,9 +30,9 @@
             <GradientStop Color="DarkOliveGreen"  />
         </LinearGradientBrush>
     </Window.Background>
-   
-        
-   
+
+
+
     <Grid>
         <Border
             CornerRadius="60" Margin="10,10,10,10">
@@ -42,8 +42,8 @@
                     <GradientStop Color="PaleGreen"  Offset="1.0"/>
                 </LinearGradientBrush>
             </Border.Background>
-       
-        <StackPanel Margin="20">
+
+            <StackPanel Margin="20">
                 <Label Content="РЕГИСТРАЦИЯ" Foreground="Black" FontWeight="Bold" FontStyle="Oblique" FontSize="25" HorizontalAlignment="Center"/>
                 <Separator></Separator>
                 <Label Content="Логин" Foreground="Black" FontWeight="Bold" FontStyle="Oblique"/>
@@ -51,7 +51,7 @@
                 <Label Content="Пароль" Foreground="Black" FontWeight="Bold" FontStyle="Oblique"/>
                 <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" x:Name="_passwordBox" Background="#545d6a" Foreground="Black"  FontSize="18"/>
                 <Label Content="Email" Foreground="Black" FontWeight="Bold" FontStyle="Oblique"/>
-                <TextBox  Background="#545d6a" Foreground="Black"  FontSize="18"/>
+                <TextBox Text="{Binding Email}"  Background="#545d6a" Foreground="Black"  FontSize="18"/>
                 <DockPanel>
                     <Button Content="Зарегистрироваться" Margin="0 20 0 0" HorizontalAlignment="Center" Background="Firebrick"
                     Foreground="White"  FontSize="17" Height="30" Width="180"
@@ -63,5 +63,5 @@
             </StackPanel>
         </Border>
     </Grid>
-    
+
 </Window>
