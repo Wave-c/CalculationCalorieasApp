@@ -72,9 +72,5 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
-        <!--<Button Command="{Binding AddProductCommand}" Content="Добавить" Grid.Column="0" Height="30" Width="80" Margin="72,10,498,60" Background="ForestGreen" />
-        <Button Command="{Binding UpdateProductCommand}" Content="Изменить" Grid.Row="2" Grid.ColumnSpan="2" Height="30" Width="80" Margin="160,10,160,60" Background="ForestGreen" />
-        <Button Command="{Binding RemoveProductCommand}" Content="Удалить" Height="30" Width="80" Margin="494,10,76,60" Background="ForestGreen"/>
-        <Button Command="{Binding SaveProductCommand}" Content="Сохранить" Grid.Row="2" Grid.ColumnSpan="2" Height="40" Width="100" Margin="150,50,150,10" Background="ForestGreen" />-->
     </Grid>
 </UserControl>

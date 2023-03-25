@@ -26,10 +26,12 @@ namespace CalculationCalorieasApp.Views
     public partial class PersonalAccountWindow : Window, ILoginOrRegisterWindow
     {
         private User _currentUser;
+        private MainWindowViewModel _parentViewModel;
 
-        public PersonalAccountWindow(User currentUser)
+        public PersonalAccountWindow(User currentUser, MainWindowViewModel parentViewModel)
         {
             InitializeComponent();
+            _parentViewModel = parentViewModel;
             _currentUser = currentUser;
             _goalComboBox.ItemsSource =
                 (Enum.GetValues(typeof(Goal)) as Goal[])
@@ -56,6 +58,10 @@ namespace CalculationCalorieasApp.Views
             ((PersonalAccountWindowViewModel)DataContext).Image = await BitmapHelper.GetUserImageAsync(_currentUser);
         }
 
+        private async void Window_Closed(object sender, EventArgs e)
+        {
+            await _parentViewModel.UpdateCalorieAllowance();
+        }
     }
 
 }
