@@ -12,7 +12,7 @@
         mc:Ignorable="d"
          Loaded="Window_Loaded"
         Title="PersonalAccountWindow" MinHeight="810" MinWidth="850" MaxHeight="810" MaxWidth="850">
-    <Window.Background>
+     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="LightBlue"  Offset="1"/>
             <GradientStop Color="DarkOliveGreen"  />
@@ -100,7 +100,7 @@
             <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" x:Name="_passwordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
             <Label Content="Новый пароль" Foreground="Black"  FontWeight="Bold" FontStyle="Oblique"/>
             <PasswordBox PasswordChanged="NewPasswordBox_PasswordChanged" x:Name="_newPasswordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
-            <Button Command="{Binding SaveLoginAndPasswordCommand}" FontWeight="Bold" Background="SandyBrown" Content="Сохранить" Height="30" Margin="120,60,120,50"/>
+            <Button Command="{Binding SaveLoginAndPasswordCommand}" FontWeight="Bold" Background="SandyBrown" Content="Сохранить" Height="35" Margin="120,60,120,50"/>
         </StackPanel>
         <Border Grid.RowSpan="2" Grid.Column="2"  CornerRadius="60" Margin="10,10,10,10">
             <Border.Background>
@@ -125,7 +125,7 @@
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"
                   ></ComboBox>
-            <TextBlock  FontSize="15" Margin="35 20 55 15"  FontWeight="Bold" FontStyle="Oblique">Введите ваш текущий вес (в килограммах)</TextBlock>
+            <TextBlock  FontSize="13" Margin="35 20 55 15"  FontWeight="Bold" FontStyle="Oblique">Введите ваш текущий вес (в килограммах)</TextBlock>
             <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock FontSize="15" Margin="70 20 60 15" FontWeight="Bold" FontStyle="Oblique" >Введите ваш рост (в сантиметрах)</TextBlock>
             <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"></TextBox>
