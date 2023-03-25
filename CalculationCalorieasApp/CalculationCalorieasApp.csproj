@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\Base\CaloriesPerDayAndPersonalAccountViewModelBase.cs" />
+    <Compile Remove="ViewModels\CaloriesPerDayWindowViewModel.cs" />
+    <Compile Remove="Views\CaloriesPerDayWindow.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\CaloriesPerDayWindow.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Resource\" />
   </ItemGroup>
 

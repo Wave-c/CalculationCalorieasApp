@@ -215,7 +215,7 @@ namespace CalculationCalorieasApp.ViewModels
 
         private void OpenPersonalAccountCommand_Execute()
         {
-            var personalAccountWindow = new PersonalAccountWindow(_currentUser);
+            var personalAccountWindow = new PersonalAccountWindow(_currentUser, this);
             personalAccountWindow.Show();
         }
 
@@ -224,6 +224,14 @@ namespace CalculationCalorieasApp.ViewModels
             using (var dbContext = new AppDBContext())
             {
                 Products = await dbContext.Products.ToListAsync();
+            }
+        }
+
+        public async Task UpdateCalorieAllowance()
+        {
+            using (var dbContext = new AppDBContext())
+            {
+                CalorieAllowance = (await dbContext.Users.Where(x => x.Id == _currentUser.Id).FirstAsync()).CalPerDay;
             }
         }
     }

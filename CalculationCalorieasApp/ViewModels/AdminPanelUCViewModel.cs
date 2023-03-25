@@ -75,14 +75,6 @@ namespace CalculationCalorieasApp.ViewModels
         private DelegateCommand _updateProductCommand;
         public DelegateCommand UpdateProductCommand => _updateProductCommand ??= new DelegateCommand(UpdateProductCommand_Execute, UpdateProductCommand_CanExecute);
 
-        private DelegateCommand _saveProductCommand;
-        public DelegateCommand SaveProductCommand => _saveProductCommand ??= new DelegateCommand(SaveProductCommand_Execute);
-
-        private void SaveProductCommand_Execute()
-        {
-
-        }
-
         private async void UpdateProductCommand_Execute()
         {
             using (var dbContext = new AppDBContext())
