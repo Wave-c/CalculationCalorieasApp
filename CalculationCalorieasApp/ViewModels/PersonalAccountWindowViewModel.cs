@@ -26,8 +26,8 @@ namespace CalculationCalorieasApp.ViewModels
     public class PersonalAccountWindowViewModel : BindableBase
     {
         private User _user;
-        private ILoginOrRegisterWindow _window;
-        public PersonalAccountWindowViewModel(ILoginOrRegisterWindow window, User user)
+        private PersonalAccountWindow _window;
+        public PersonalAccountWindowViewModel(PersonalAccountWindow window, User user)
         {
             _window = window;
             _user = user;
