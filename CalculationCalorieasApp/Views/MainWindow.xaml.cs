@@ -54,6 +54,12 @@ namespace CalculationCalorieasApp.Views
             await ((MainWindowViewModel)DataContext).UpdateProductsAsync();
             var temp = await BitmapHelper.GetUserImageAsync(_currentUser);
             ((MainWindowViewModel)DataContext).Image = temp;
+            if (_currentUser.Status == StatusUser.USER)
+            {
+                this.MinHeight = 584;
+                this.Height = 584;
+                _mainGrid.RowDefinitions.Remove(_adminPanelRow);
+            }
         }
     }
 }
