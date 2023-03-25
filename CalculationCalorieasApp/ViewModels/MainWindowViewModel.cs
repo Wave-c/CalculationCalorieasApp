@@ -218,6 +218,7 @@ namespace CalculationCalorieasApp.ViewModels
             BreakfastCcal = 0;
             DinnerCcal = 0;
             SupperCcal = 0;
+            SumCaloriesPerDay = 0;
             var breakfastProduct = BreakfastProducts.ToList();
             var dinnerProduct = DinnerProducts.ToList();
             var supperProduct = SupperProducts.ToList();
@@ -242,13 +243,13 @@ namespace CalculationCalorieasApp.ViewModels
             return SelectedProduct != null;
         }
 
-        public async Task UpdateProducts()
-        {
-            using (var dbContext = new AppDBContext())
-            {
-                Products = await dbContext.Products.ToListAsync();
-            }
-        }
+        //public async Task UpdateProducts()
+        //{
+        //    using (var dbContext = new AppDBContext())
+        //    {
+        //        Products = await dbContext.Products.ToListAsync();
+        //    }
+        //}
 
 
     }
