@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace CalculationCalorieasApp.ViewModels
 {
     public class AdminPanelUCViewModel : BindableBase
     {
+        private Product _selectedProduct;
         private string _name;
         private int _calories;
         private string _updatedName;
@@ -23,6 +25,8 @@ namespace CalculationCalorieasApp.ViewModels
         {
             Calories = 0;
             _parentViewModel = parentViewModel;
+            var dbContext = new AppDBContext();
+            Products = new ObservableCollection<Product>(dbContext.Products);
         }
 
         public string UpdatedName
@@ -35,21 +39,12 @@ namespace CalculationCalorieasApp.ViewModels
                 UpdateProductCommand.RaiseCanExecuteChanged();
             }
         }
-        public string Name
+        public string NameProduct
         {
             get => _name;
             set
             {
                 _name = value;
-                using (var dbContext = new AppDBContext())
-                {
-                    var productByName = dbContext.Products.Where(x => x.Name == _name).FirstOrDefault();
-                    if(productByName != null)
-                    {
-                        Calories = productByName.Calories;
-                        UpdatedName = productByName.Name;
-                    }
-                }
                 RaisePropertyChanged();
                 AddProductCommand.RaiseCanExecuteChanged();
                 RemoveProductCommand.RaiseCanExecuteChanged();
@@ -65,7 +60,36 @@ namespace CalculationCalorieasApp.ViewModels
                 AddProductCommand.RaiseCanExecuteChanged();
             }
         }
-
+        public Product SelectedProduct
+        {
+            get => _selectedProduct;
+            set
+            {
+                _selectedProduct = value;
+                using (var dbContext = new AppDBContext())
+                {
+                    var productByName = dbContext.Products.Where(x => x.Id == _selectedProduct.Id).FirstOrDefault();
+                    if (productByName != null)
+                    {
+                        Calories = productByName.Calories;
+                        UpdatedName = productByName.Name;
+                    }
+                }
+                RaisePropertyChanged();
+                RemoveProductCommand.RaiseCanExecuteChanged();
+            }
+        }
+        private ObservableCollection<Product> _products;
+        public ObservableCollection<Product> Products
+        {
+            get => _products;
+            set
+            {
+                _products = value;
+                RaisePropertyChanged();
+                RemoveProductCommand.RaiseCanExecuteChanged();
+            }
+        }
         private DelegateCommand _addProductCommand;
         public DelegateCommand AddProductCommand => _addProductCommand ??= new DelegateCommand(AddProductCommand_Execute, AddProductCommand_CanExecute);
 
@@ -87,61 +111,53 @@ namespace CalculationCalorieasApp.ViewModels
         {
             using (var dbContext = new AppDBContext())
             {
-                var updatedProduct = await dbContext.Products.Where(x => x.Name == Name).FirstOrDefaultAsync();
-                if(updatedProduct != null)
-                {
+                var updatedProduct = await dbContext.Products.Where(x => x.Id == SelectedProduct.Id).FirstOrDefaultAsync();
                     updatedProduct.Name = UpdatedName;
                     updatedProduct.Calories = Calories;
                     await dbContext.SaveChangesAsync();
                     await _parentViewModel.UpdateProductsAsync();
-                }
-                Name = "";
+                
+                Products = new ObservableCollection<Product>(dbContext.Products);
                 UpdatedName = "";
                 Calories = 0;
             }
         }
         private bool UpdateProductCommand_CanExecute()
         {
-            return !string.IsNullOrWhiteSpace(UpdatedName) && Calories != 0;
+            return SelectedProduct != null && Calories != 0;
         }
 
         private async void RemoveProductCommand_Execute()
         {
             using (var dbContext = new AppDBContext())
             {
-                var removedProduct = await dbContext.Products.Where(x => x.Name == Name).FirstAsync();
-                if(removedProduct != null)
-                {
+                var removedProduct = await dbContext.Products.Where(x => x.Id == SelectedProduct.Id).FirstAsync();
                     dbContext.Remove(removedProduct);
                     await dbContext.SaveChangesAsync();
                     await _parentViewModel.UpdateProductsAsync();
-                }
-                else
-                {
-                    MessageBox.Show("Такого продукта не существует", "Error", MessageBoxButton.OK);
-                }
+                    SelectedProduct = null;
+                    Products = new ObservableCollection<Product>(dbContext.Products);
             }
-            Name = "";
         }
         private bool RemoveProductCommand_CanExecute()
         {
-            return !string.IsNullOrWhiteSpace(Name);
+            return SelectedProduct!=null;
         }
 
         private async void AddProductCommand_Execute()
         {
             using (var dbContext = new AppDBContext())
             {
-                await dbContext.Products.AddAsync(new Product(Guid.NewGuid(), Name, Calories));
+                await dbContext.Products.AddAsync(new Product(Guid.NewGuid(), NameProduct, Calories));
                 await dbContext.SaveChangesAsync();
                 await _parentViewModel.UpdateProductsAsync();
             }
-            Name = "";
+            NameProduct = "";
             Calories = 0;
         }
         private bool AddProductCommand_CanExecute()
         {
-            return !string.IsNullOrWhiteSpace(Name) && Calories != 0;
+            return !string.IsNullOrWhiteSpace(NameProduct) && Calories != 0;
         }
     }
 }
