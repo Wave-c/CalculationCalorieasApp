@@ -12,11 +12,15 @@ using System.Windows;
 using CalculationCalorieasApp.Views;
 
 
+
 namespace CalculationCalorieasApp.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
         private User _currentUser;
+        private int _breakfastCcal;
+        private int _dinnerCcal;
+        private int _supperCcal;
         private int _calorieAllowance;
         private int _sumCaloriesPerDay;
         private IEnumerable<Product> _products = new List<Product>();
@@ -28,6 +32,7 @@ namespace CalculationCalorieasApp.ViewModels
         private int _breakfastCcal;
         private int _dinnerCcal;
         private int _supperCcal;
+
 
         public MainWindowViewModel(User currentUser)
         {
@@ -47,6 +52,35 @@ namespace CalculationCalorieasApp.ViewModels
                 RaisePropertyChanged();
                 AddProductCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public int BreakfastCcal
+        {
+            get=> _breakfastCcal;
+            set
+            {
+                _breakfastCcal = value; 
+                RaisePropertyChanged();
+            }
+        }
+        public int DinnerCcal
+        {
+            get => _dinnerCcal;
+            set
+            {
+                _dinnerCcal = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int SupperCcal
+        {
+            get => _supperCcal;
+            set
+            {
+                _supperCcal = value;
+                RaisePropertyChanged();
+            }   
         }
         public List<Product> SupperProducts
         {
@@ -186,7 +220,8 @@ namespace CalculationCalorieasApp.ViewModels
 
         private void AddProductCommand_Execute()
         {
-            switch(Eating)
+           
+            switch (Eating)
             {
                 case Eating.BREAKFAST:
                     BreakfastCcal += SelectedProduct.Calories;
