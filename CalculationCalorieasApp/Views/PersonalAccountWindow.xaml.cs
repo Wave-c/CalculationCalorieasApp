@@ -23,7 +23,7 @@ namespace CalculationCalorieasApp.Views
     /// <summary>
     /// Логика взаимодействия для PersonalAccountWindow.xaml
     /// </summary>
-    public partial class PersonalAccountWindow : Window, ILoginOrRegisterWindow
+    public partial class PersonalAccountWindow : Window
     {
         private User _currentUser;
         private MainWindowViewModel _parentViewModel;
