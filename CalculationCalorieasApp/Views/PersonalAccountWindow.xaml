@@ -11,7 +11,13 @@
          d:DataContext="{d:DesignInstance Type=viewModels:PersonalAccountWindowViewModel}"
         mc:Ignorable="d"
          Loaded="Window_Loaded"
-        Title="PersonalAccountWindow" Height="810" Width="850">
+        Title="PersonalAccountWindow" MinHeight="810" MinWidth="850" MaxHeight="810" MaxWidth="850">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LightBlue"  Offset="1"/>
+            <GradientStop Color="DarkOliveGreen"  />
+        </LinearGradientBrush>
+    </Window.Background>
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
@@ -57,7 +63,14 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Border Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
+        <Border  CornerRadius="60" Margin="10,10,10,10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,0.9" StartPoint="0.5,0">
+                    <GradientStop Color="Wheat"/>
+                    <GradientStop Color="PaleGreen"  Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Button Command="{Binding ChangeImageCommand}">
             <Button.Template>
                 <ControlTemplate>
@@ -69,49 +82,62 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Border Grid.Row="1" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
+   
+            <Border  Grid.Row="1" CornerRadius="60" Margin="10,10,10,10">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,0.9" StartPoint="0.5,0">
+                        <GradientStop Color="Wheat"/>
+                        <GradientStop Color="PaleGreen"  Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
         <StackPanel Margin="20" Grid.Row="1">
-            <Label Content="Логин/Пароль" Foreground="Black"  FontSize="25" HorizontalAlignment="Center"/>
+            <Label Content="Логин/Пароль" Foreground="Black"  FontWeight="Bold" FontStyle="Oblique" FontSize="25"  HorizontalAlignment="Center"/>
             <Separator></Separator>
-            <Label Content="Логин" Foreground="Black"/>
+            <Label Content="Логин"  FontWeight="Bold" FontStyle="Oblique" Foreground="Black"/>
             <TextBox Text="{Binding UserName}" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
-            <Label Content="Текущий пароль" Foreground="Black"/>
+            <Label Content="Текущий пароль" Foreground="Black"  FontWeight="Bold" FontStyle="Oblique"/>
             <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" x:Name="_passwordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
-            <Label Content="Новый пароль" Foreground="Black"/>
+            <Label Content="Новый пароль" Foreground="Black"  FontWeight="Bold" FontStyle="Oblique"/>
             <PasswordBox PasswordChanged="NewPasswordBox_PasswordChanged" x:Name="_newPasswordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
-            <Button Command="{Binding SaveLoginAndPasswordCommand}">
-                Сохранить
-            </Button>
+            <Button Command="{Binding SaveLoginAndPasswordCommand}" FontWeight="Bold" Background="SandyBrown" Content="Сохранить" Height="30" Margin="120,60,120,50"/>
         </StackPanel>
-        <Border Grid.RowSpan="2" Grid.Column="2" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
+        <Border Grid.RowSpan="2" Grid.Column="2"  CornerRadius="60" Margin="10,10,10,10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,0.9" StartPoint="0.5,0">
+                    <GradientStop Color="Wheat"/>
+                    <GradientStop Color="PaleGreen"  Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <StackPanel Margin="20" Grid.RowSpan="2" Grid.Column="1">
-            <Label Content="ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ" Foreground="Black"  FontSize="20" HorizontalAlignment="Center"/>
+            <Label Content="ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ" Foreground="Black"  FontWeight="Bold" FontStyle="Oblique" FontSize="20" HorizontalAlignment="Center"/>
             <Separator></Separator>
-            <TextBlock FontSize="15" Margin="140 20 60 15" Grid.Row="2" >Выберите цель</TextBlock>
+            <TextBlock FontSize="15" Margin="140 20 60 15" Grid.Row="2" FontWeight="Bold" FontStyle="Oblique" >Выберите цель</TextBlock>
             <ComboBox Margin="50 20 70 15" x:Name="_goalComboBox"
                       SelectedItem="{Binding SelectedGoal, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock FontSize="15" Margin="140 20 60 15">Выберите пол</TextBlock>
+            <TextBlock FontSize="15" Margin="140 20 60 15"  FontWeight="Bold" FontStyle="Oblique">Выберите пол</TextBlock>
             <ComboBox Margin="50 20 70 15" 
                   x:Name="_genderComboBox"
                       SelectedItem="{Binding SelectedGender, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"
                   ></ComboBox>
-            <TextBlock  FontSize="15" Margin="35 20 55 15">Введите ваш текущий вес (в килограммах)</TextBlock>
+            <TextBlock  FontSize="15" Margin="35 20 55 15"  FontWeight="Bold" FontStyle="Oblique">Введите ваш текущий вес (в килограммах)</TextBlock>
             <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBlock FontSize="15" Margin="70 20 60 15">Введите ваш рост (в сантиметрах)</TextBlock>
+            <TextBlock FontSize="15" Margin="70 20 60 15" FontWeight="Bold" FontStyle="Oblique" >Введите ваш рост (в сантиметрах)</TextBlock>
             <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBlock  FontSize="15" Margin="85 20 60 15">Введите ваш возраст (в годах)</TextBlock>
+            <TextBlock  FontSize="15" Margin="85 20 60 15"  FontWeight="Bold" FontStyle="Oblique">Введите ваш возраст (в годах)</TextBlock>
             <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBlock  FontSize="15" Margin="90 20 60 15">Выберите вашу активность</TextBlock>
+            <TextBlock  FontSize="15" Margin="90 20 60 15"  FontWeight="Bold" FontStyle="Oblique">Выберите вашу активность</TextBlock>
             <ComboBox Margin="50 20 70 15"
                   x:Name="_activComboBox"
                       SelectedItem="{Binding SelectedActiv, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"></ComboBox>
-            <Button Margin="110 10 140 25"  Background="LightGreen" Command="{Binding SaveCommand}">Сохранить</Button>
+            <Button Margin="110,10" Height="30" Background="SandyBrown"  FontWeight="Bold" Command="{Binding SaveCommand}">Сохранить</Button>
 
         </StackPanel>
     </Grid>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         mc:Ignorable="d"
-        Title="Авторизация" Height="400" Width="400"
+        Title="Авторизация" MinHeight="400" MinWidth="400" MaxHeight="400" MaxWidth="400"
         d:DataContext="{d:DesignInstance Type=viewModels:LoginWindowViewModel}">
     <Window.Resources>
         <Style TargetType="Button">
@@ -24,24 +24,40 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LightBlue" Offset="1" />
+            <GradientStop Color="DarkOliveGreen" />
+        </LinearGradientBrush>
+    </Window.Background>
+
+
     <Grid>
-        <Border Background="LightBlue"  CornerRadius="60" Margin=" 20">
+        <Border  CornerRadius="60" Margin="10,10,10,10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,0.9" StartPoint="0.5,0">
+                    <GradientStop Color="Wheat"/>
+                    <GradientStop Color="PaleGreen"  Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
             <StackPanel Margin="20">
-                <Label Content="АВТОРИЗАЦИЯ" Foreground="Black"  FontSize="25" HorizontalAlignment="Center"/>
+                <Label Content="АВТОРИЗАЦИЯ" Foreground="Black" FontWeight="Bold" FontStyle="Oblique"  FontSize="25" HorizontalAlignment="Center"/>
                 <Separator></Separator>
-                <Label Content="ЛОГИН" Foreground="Black"/>
+                <Label Content="ЛОГИН" FontWeight="Bold" FontStyle="Oblique" Foreground="Black"/>
                 <TextBox  Background="#545d6a" Foreground="White" FontSize="18" Text="{Binding UserName}"/>
-                <Label Content="ПАРОЛЬ" Foreground="Black"/>
+                <Label Content="ПАРОЛЬ" FontWeight="Bold" FontStyle="Oblique" Foreground="Black"/>
                 <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" PasswordChar="*" Background="#545d6a" Foreground="White" FontSize="18"/>
                 <DockPanel>
-                    <Button Command="{Binding EnterToAppCommand}" Content="ВОЙТИ" Margin="20 10" Height="30" Width="65" HorizontalAlignment="Left" Background="Firebrick"
+                    <Button Command="{Binding EnterToAppCommand}"  FontStyle="Oblique" Content="ВОЙТИ" Margin="20 10" Height="30" Width="92" Background="Firebrick"
                     Foreground="White" FontSize="17"
                    />
-                    <Button  Content="РЕГИСТРАЦИЯ" Margin="20 10" Height="30" Width="120" HorizontalAlignment="Right" Background="Firebrick"
+                    <Button  Content="РЕГИСТРАЦИЯ" FontStyle="Oblique" Margin="20 10" Height="30" Width="135" Background="Firebrick"
                     Foreground="White" FontSize="17"
                     Command="{Binding OpenLoginRegWindowCommand}"/>
                 </DockPanel>
             </StackPanel>
         </Border>
     </Grid>
+
 </Window>

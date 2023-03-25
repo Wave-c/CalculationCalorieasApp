@@ -52,6 +52,8 @@ namespace CalculationCalorieasApp.Views
         {
             _adminPanel.DataContext = new AdminPanelUCViewModel(((MainWindowViewModel)DataContext));
             await ((MainWindowViewModel)DataContext).UpdateProducts();
+            var temp = await BitmapHelper.GetUserImageAsync(_currentUser);
+            ((MainWindowViewModel)DataContext).Image = temp;
         }
     }
 }

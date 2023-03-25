@@ -1,6 +1,7 @@
 ﻿using CalculationCalorieasApp.Medels;
 using CalculationCalorieasApp.Medels.Entitys;
 using CalculationCalorieasApp.Medels.Enums;
+using CalculationCalorieasApp.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using CalculationCalorieasApp.Views;
-
+using System;
 
 namespace CalculationCalorieasApp.ViewModels
 {
@@ -28,7 +29,7 @@ namespace CalculationCalorieasApp.ViewModels
         private int _breakfastCcal;
         private int _dinnerCcal;
         private int _supperCcal;
-
+        private BitmapImage _image;
         public MainWindowViewModel(User currentUser)
         {
             _currentUser = currentUser;
@@ -141,6 +142,17 @@ namespace CalculationCalorieasApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        public BitmapImage Image
+        {
+            get => _image;
+            set
+            {
+                _image = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         public bool HasUserAdminOptions { get; set; }
 

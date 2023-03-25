@@ -10,7 +10,7 @@
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
          d:DataContext="{d:DesignInstance Type=viewModels:CaloriesPerDayWindowViewModel}"
         mc:Ignorable="d"
-        Title="CaloriesPerDayWindow" Height="550" Width="850">
+        Title="CaloriesPerDayWindow" MinHeight="550" MinWidth="850" MaxHeight="550" MaxWidth="850">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
@@ -62,35 +62,42 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Border Grid.ColumnSpan="2" Grid.RowSpan="8" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
-        <TextBlock FontSize="15" Margin="230 20 60 15">Выберите цель</TextBlock>
+        <Border Grid.ColumnSpan="2"  Grid.RowSpan="8" CornerRadius="60" Margin="10,10,10,10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,0.7" StartPoint="0.5,0">
+                    <GradientStop Color="Wheat"/>
+                    <GradientStop Color="PaleGreen"  Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <TextBlock FontSize="15" Margin="230 20 60 15" FontWeight="Bold" FontStyle="Oblique">Выберите цель</TextBlock>
         <ComboBox Margin="50 20 70 15" Grid.Column="1" x:Name="_goalComboBox"
                       SelectedItem="{Binding SelectedGoal, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Grid.Row="1" FontSize="15" Margin="240 20 60 15">Выберите пол</TextBlock>
+        <TextBlock Grid.Row="1" FontSize="15" Margin="240 20 60 15" FontWeight="Bold" FontStyle="Oblique" >Выберите пол</TextBlock>
         <ComboBox Margin="50 20 70 15" Grid.Row="1" Grid.Column="1"
                   x:Name="_genderComboBox"
                       SelectedItem="{Binding SelectedGender, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"
                   ></ComboBox>
-        <TextBlock Grid.Row="2" FontSize="15" Margin="50 20 55 15">Введите ваш текущий вес (в килограммах)</TextBlock>
+        <TextBlock Grid.Row="2" FontSize="15" Margin="50 20 55 15" FontWeight="Bold" FontStyle="Oblique">Введите ваш текущий вес (в килограммах)</TextBlock>
         <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Grid.Row="2" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <TextBlock Grid.Row="3" FontSize="15" Margin="105 20 60 15">Введите ваш рост (в сантиметрах)</TextBlock>
+        <TextBlock Grid.Row="3" FontSize="15" Margin="105 20 60 15" FontWeight="Bold" FontStyle="Oblique">Введите ваш рост (в сантиметрах)</TextBlock>
         <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Grid.Row="3" Grid.Column="1" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <TextBlock Grid.Row="4" FontSize="15" Margin="130 20 60 15">Введите ваш возраст (в годах)</TextBlock>
+        <TextBlock Grid.Row="4" FontSize="15" Margin="130 20 60 15" FontWeight="Bold" FontStyle="Oblique">Введите ваш возраст (в годах)</TextBlock>
         <TextBox Margin="50 20 70 15" Background="LightSteelBlue" Grid.Row="4" Grid.Column="1" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <TextBlock Grid.Row="5" FontSize="15" Margin="150 20 60 15">Выберите вашу активность</TextBlock>
+        <TextBlock Grid.Row="5" FontSize="15" Margin="150 20 60 15" FontWeight="Bold" FontStyle="Oblique">Выберите вашу активность</TextBlock>
         <ComboBox Margin="50 20 70 15" Grid.Row="5" Grid.Column="1"
                   x:Name="_activComboBox"
                       SelectedItem="{Binding SelectedActiv, 
                 Converter={StaticResource EnumDescriptionConverter},
                 UpdateSourceTrigger=PropertyChanged}"></ComboBox>
-        <Button Margin="150 20 100 15" Grid.Row="6" Command="{Binding ResultCommand,UpdateSourceTrigger=PropertyChanged}" Background="LightGreen" >Рассчитать</Button>
-        <TextBlock  Margin="50 20 140 15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1"> Рекомендуемое количество ккал в день: </TextBlock>
-        <TextBlock  Margin="300 20 70 15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1" Text="{Binding Result,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-        <Button Command="{Binding CloseWindowCommand}" Margin="150 10 100 25" Grid.Row="7"  Background="LightGreen" >Выход</Button>
-        <Button Command="{Binding RegisterCommand}" Margin="110 10 140 25" Grid.Row="7" Grid.Column="1" Background="LightGreen" >Сохранить данные </Button>
+        <Button Margin="150 20 100 15" Grid.Row="6" FontWeight="Bold"  Command="{Binding ResultCommand,UpdateSourceTrigger=PropertyChanged}" Background="SandyBrown" >Рассчитать</Button>
+        <TextBlock  Margin="50,20,135,15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1" FontWeight="Bold"> Рекомендуемое количество ккал в день: </TextBlock>
+        <TextBlock  Margin="300 20 70 15" Background="LightSteelBlue" Grid.Row="6" Grid.Column="1" FontWeight="Bold" Text="{Binding Result,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+        <Button Command="{Binding CloseWindowCommand}"  FontWeight="Bold" Margin="150 10 100 25" Grid.Row="7"  Background="SandyBrown" >Выход</Button>
+        <Button Command="{Binding RegisterCommand}" FontWeight="Bold" Margin="110 10 140 25" Grid.Row="7" Grid.Column="1" Background="SandyBrown" >Сохранить данные </Button>
     </Grid>
 </Window>

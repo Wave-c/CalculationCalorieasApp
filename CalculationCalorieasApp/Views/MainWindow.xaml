@@ -1,5 +1,4 @@
 ﻿<Window x:Class="CalculationCalorieasApp.Views.MainWindow"
-        Loaded="Window_Loaded"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,8 +8,14 @@
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
         mc:Ignorable="d"
-        Title="Рассчет килокаллорий" Height="784" Width="784"
+        Title="Рассчет килокалорий" MinHeight="784" MinWidth="784" MaxHeight="784" MaxWidth="784"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LightBlue"  Offset="1"/>
+            <GradientStop Color="DarkOliveGreen"  />
+        </LinearGradientBrush>
+    </Window.Background>
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
         <Style TargetType="Button">
@@ -28,6 +33,7 @@
             </Setter>
         </Style>
     </Window.Resources>
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -40,41 +46,58 @@
             <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.ColumnSpan="2" Grid.RowSpan="2" Background="LightBlue"  CornerRadius="60" Margin="10,10,10,10"></Border>
-        <Button Margin="30 30 270 250" Command="{Binding OpenPersonalAccountCommand}">
-            Личный кабинет
-        </Button>
-            <Label Content="Выберите продукты (100 г)" Height="35" Width="260" Foreground="Black"  FontSize="20" RenderTransformOrigin="0.525,-1.342" Margin="32,31,33,201"/>
-        <ListBox Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" Height="300" Width="300" Background="AliceBlue"   Foreground="Black" Margin="20,92,5,142"/>
+        <Border Grid.ColumnSpan="2"  Grid.RowSpan="2" CornerRadius="60" Margin="10,10,10,10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,0.7" StartPoint="0.5,0">
+                    <GradientStop Color="Wheat"/>
+                    <GradientStop Color="PaleGreen"  Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Label Content="Выберите продукты (100 г)" Height="35" Width="260" Foreground="Black" FontWeight="Bold" FontStyle="Oblique"  FontSize="20" RenderTransformOrigin="0.525,-1.342" Margin="32,31,33,201"/>
+        <ListBox Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" Height="300" Width="300" Background="LightGray"   Foreground="Black" Margin="20,92,5,142"/>
         <RadioButton Checked="RadioButtonBreakfast_Checked" x:Name="RadioButtonBreakfast" Content="Завтрак"  Foreground="Black"  FontSize="18" Margin="56,130,176,107" Grid.Row="1" Height="NaN" Width="NaN" RenderTransformOrigin="0.504,3.958"/>
-        <RadioButton Checked="RadioButtonDinner_Checked" x:Name="RadioButtonDinner"  Content="Обед" Foreground="Black"  FontSize="18" Margin="56,160,192,84" Height="NaN" Width="NaN" Grid.Row="1"/>
-        <RadioButton Checked="RadioButtonSupper_Checked" x:Name="RadioButtonSupper"  Content="Ужин"  Foreground="Black"  FontSize="18" Margin="56,188,187,58" Grid.Row="1" Height="NaN" Width="NaN"/>
-        <Button Command="{Binding AddProductCommand}" Content="Добавить" Background="LightGreen" Foreground="Black"  FontSize="15"
-                 RenderTransformOrigin="0.721,-3.205"  Width="90" Height="30" Margin="204,207,98,47" Grid.Row="1"  />
+        <RadioButton Checked="RadioButtonDinner_Checked" x:Name="RadioButtonDinner"  Content="Обед" Foreground="Black"   FontSize="18" Margin="56,160,192,84" Height="NaN" Width="NaN" Grid.Row="1"/>
+        <RadioButton Checked="RadioButtonSupper_Checked" x:Name="RadioButtonSupper"  Content="Ужин"  Foreground="Black"   FontSize="18" Margin="56,188,187,58" Grid.Row="1" Height="NaN" Width="NaN"/>
+        <Button Command="{Binding AddProductCommand}" Content="Добавить" Background="SandyBrown"  FontWeight="Bold"  Foreground="Black"  FontSize="15"
+                 RenderTransformOrigin="0.721,-3.205" Margin="226,196,66,34" Grid.Row="1" Width="100" Height="NaN" />
         <Grid Grid.Column="1" Grid.RowSpan="1">
 
-            <Label Content="Ваша норма ккал"  Height="40" Width="120" Margin="10,24,195,203"></Label>
-            <TextBlock Text="{Binding SumCaloriesPerDay}" FontSize="15" Height="40" Width="120" Margin="135,64,70,163" Background="AliceBlue"></TextBlock>
-            <Label Content="Всего  за день"  Height="40" Width="120" Margin="10,64,195,163"></Label>
-            <TextBlock Text="{Binding CalorieAllowance}" FontSize="15" Height="40" Width="120" Margin="135,24,70,203" Background="AliceBlue"></TextBlock>
+            <Label Content="Ваша норма ккал"  Foreground="Black"  Height="40" Width="120" Margin="10,24,195,203"></Label>
+            <TextBlock Text="{Binding CaloriesAllowance}" FontSize="15" Height="40" Width="120" Margin="135,64,70,163" Background="LightGray"></TextBlock>
+            <Label Content="Всего  за день" Foreground="Black"  Height="40" Width="120" Margin="10,64,195,163"></Label>
+            <TextBlock Text="{Binding SumCaloriesPerDay}" FontSize="15" Height="40" Width="120" Margin="135,24,70,203" Background="LightGray"></TextBlock>
 
-            <Label Content="Завтрак" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="109,109,0,0"/>
-            <ListBox SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding BreakfastProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200"  Margin="55,151,70,66"></ListBox>
-            <Label Content="{Binding BreakfastCcal}" Height="30" Width="60" Margin="308,170,24,84" > </Label>
-            <Label Content="Обед" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black" Margin="113,222,0,0" />
-            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding DinnerProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200"  Margin="55,264,70,-47" ></ListBox>
+            <Label Content="Завтрак" Foreground="Black"  Height="35" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"   Margin="88,113,0,0"/>
+            <ListBox ItemsSource="{Binding BreakfastProducts}" Height="50" Width="200"  Margin="55,151,70,66" Background="LightGray"></ListBox>
+            <Label Content="{Binding BreakfastCcal}" Height="30" Width="60" Margin="308,170,24,84" ></Label>
+            <Label Content="Обед" Height="35" Width="86" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left"  Foreground="Black"  Margin="113,222,0,0" />
+            <ListBox ItemsSource="{Binding DinnerProducts}" Height="50" Width="200"  Margin="55,264,70,-47" Background="LightGray" ></ListBox>
             <Label Content="{Binding DinnerCcal}" Height="30" Width="60" RenderTransformOrigin="0.517,0.536" Margin="308,283,24,-29"></Label>
-            <Label Content="Ужин" Height="35" Width="86" FontSize="20" Foreground="Black" Margin="113,346,126,-114"></Label>
-            <ListBox SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding SupperProducts, UpdateSourceTrigger=PropertyChanged}" Height="50" Width="200" Margin="55,386,70,-169" ></ListBox>
+            <Label Content="Ужин" Height="35" Width="86" FontSize="20" Foreground="Black"  Margin="114,355,192,-106"></Label>
+            <ListBox ItemsSource="{Binding SupperProducts}" Height="50" Width="200" Margin="55,386,70,-169" Background="LightGray" ></ListBox>
             <Label Content="{Binding SupperCcal}" Height="30" Width="60" Margin="308,405,24,-151" ></Label>
 
-            <Button Command="{Binding RemoveProductCommand}" Content=" Убрать продукт"  Height="30" Width="100" Margin="64,491,228,-237" Background="LightGreen" RenderTransformOrigin="0.777,0.641"></Button>
-            <Button Content="Рассчитать" Height="30" Width="100"  Background="LightGreen" Margin="212,491,80,-237"></Button>
+            <Button Content=" Убрать продукт" FontSize="14" Command="{Binding RemoveProductCommand}" Margin="57,478,204,-250" Background="SandyBrown" FontWeight="Bold" RenderTransformOrigin="0.777,0.641" Width="NaN" Height="NaN"/>
+            <Button Command="{Binding OpenPersonalCommand}" ToolTip="Редактировать профиль" Width="70" Height="70" Margin="268,471,54,-257" RenderTransformOrigin="0.569,0.334" >
+                <Button.Template>
+                  <ControlTemplate>
+                    <Ellipse Width="60" Height="60">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="Binding Image" Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                  </ControlTemplate>
+                </Button.Template>
+            </Button> 
         </Grid>
+        <Grid Grid.Row="2" Visibility="Hidden"></Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="AntiqueWhite"
          Visibility="{Binding HasUserAdminOptions, Converter={StaticResource BoolToVisConverter}}">
             <views:AdminPanelUC x:Name="_adminPanel"/>
         </Grid>
 
     </Grid>
+
 </Window>
