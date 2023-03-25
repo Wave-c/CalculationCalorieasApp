@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculationCalorieasApp.Views"
         xmlns:viewModels="clr-namespace:CalculationCalorieasApp.ViewModels"
-        xmlns:entities="clr-namespace:CalculationCalorieasApp.Medels.Entitys"
+        xmlns:enums="clr-namespace:CalculationCalorieasApp.Medels.Enums"
         xmlns:system="clr-namespace:System;assembly=mscorlib" 
         xmlns:helpers="clr-namespace:CalculationCalorieasApp.Helpers"
          d:DataContext="{d:DesignInstance Type=viewModels:CaloriesPerDayWindowViewModel}"
@@ -30,19 +30,19 @@
         <ObjectDataProvider x:Key="GoalsEnum" MethodName="GetValues"
                             ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="viewModels:Goal"/>
+                <x:Type TypeName="enums:Goal"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <ObjectDataProvider x:Key="GenderEnum" MethodName="GetValues"
                             ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="viewModels:Gender"/>
+                <x:Type TypeName="enums:Gender"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <ObjectDataProvider x:Key="ActivEnum" MethodName="GetValues"
                             ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="viewModels:Activ"/>
+                <x:Type TypeName="enums:Activ"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <helpers:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>

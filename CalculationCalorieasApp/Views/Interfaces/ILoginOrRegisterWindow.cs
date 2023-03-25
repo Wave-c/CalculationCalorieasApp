@@ -9,5 +9,9 @@ namespace CalculationCalorieasApp.Views.Interfaces
 {
     public interface ILoginOrRegisterWindow
     {
+        //void Show();
+        //bool? ShowDialog();
+        //bool? DialogResult { get; set; }
+        //void Close();
     }
 }
