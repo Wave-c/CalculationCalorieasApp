@@ -100,7 +100,7 @@
             <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" x:Name="_passwordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
             <Label Content="Новый пароль" Foreground="Black"  FontWeight="Bold" FontStyle="Oblique"/>
             <PasswordBox PasswordChanged="NewPasswordBox_PasswordChanged" x:Name="_newPasswordBox" Background="LightSteelBlue" Foreground="Black"  FontSize="18"/>
-            <Button Command="{Binding SaveLoginAndPasswordCommand}" FontWeight="Bold" Background="SandyBrown" Content="Сохранить" Height="35" Margin="120,60,120,50"/>
+            <Button Command="{Binding SaveLoginAndPasswordCommand}" FontWeight="Bold" Background="SandyBrown" Content="Сохранить" Height="35" Margin="120,60,120,50"></Button>
         </StackPanel>
         <Border Grid.RowSpan="2" Grid.Column="2"  CornerRadius="60" Margin="10,10,10,10">
             <Border.Background>
